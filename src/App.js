@@ -3,6 +3,7 @@ import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RootLayout from "./components/UI/RootLayout";
 import EditPage from "./components/Editing/EditPage";
+import ImportPage from "./components/Import/ImportPage";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
       {
         path: "/editing",
         element: <EditPage />,
+      },
+      {
+        path: "/import",
+        element: <ImportPage />,
       },
     ],
   },
