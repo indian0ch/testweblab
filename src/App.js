@@ -5,6 +5,7 @@ import RootLayout from "./components/UI/RootLayout";
 import EditPage from "./components/Editing/EditPage";
 import ImportPage from "./components/Import/ImportPage";
 import SortListPage from "./components/List/SortListPage";
+import CatalogPage from "./components/Catalog/CatalogPage";
 
 const router = createBrowserRouter([
   {
@@ -13,6 +14,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
+        element: <CatalogPage />,
       },
       {
         path: "/editing",

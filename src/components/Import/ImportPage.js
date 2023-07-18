@@ -1,15 +1,14 @@
 import ImportForm from "./ImportForm";
+import ContainerWrapper from "../UI/ContainerWrapper";
 
 function ImportPage(props) {
   return (
-    <div className={`container-md my-5`}>
-    <div className="col-md-8 col-12 mx-auto">
+    <ContainerWrapper>
       <h2>Імпорт фільмів з текстового файлу</h2>
       <div className="my-4">
         <ImportForm />
       </div>
-    </div>
-  </div>
+    </ContainerWrapper>
   );
 }
 export default ImportPage;

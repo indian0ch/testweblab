@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-// import classes from "./EditPage.module.css";
+import classes from "./EditPage.module.css";
 import AddForm from "./AddForm";
 import DeleteForm from "./DeleteForm";
 

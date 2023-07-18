@@ -1,15 +1,12 @@
 import classes from "./List.module.css";
+import ContainerWrapper from "../UI/ContainerWrapper";
 
 function SortListPage(props) {
   return (
-    <div className={`container-md my-5`}>
-    <div className="col-md-8 col-12 mx-auto">
+    <ContainerWrapper>
       <h3>Cписок фільмів, що відсортовані за назвою в алфавітному порядку</h3>
-      <div className="my-4">
-      
-      </div>
-    </div>
-  </div>
+      <div className="my-4"></div>
+    </ContainerWrapper>
   );
 }
 export default SortListPage;
