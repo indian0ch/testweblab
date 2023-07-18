@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RootLayout from "./components/UI/RootLayout";
 import EditPage from "./components/Editing/EditPage";
 import ImportPage from "./components/Import/ImportPage";
+import SortListPage from "./components/List/SortListPage";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
       {
         path: "/import",
         element: <ImportPage />,
+      },
+      {
+        path: "/sortedList",
+        element: <SortListPage />,
       },
     ],
   },

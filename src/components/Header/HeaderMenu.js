@@ -30,25 +30,26 @@ function HeaderMenu(props) {
             <Link to="/">Каталог</Link>
           </NavItem>
           <NavItem>
-            <Link to="/editing">Додати/Видалити</Link>
-          </NavItem>
-          <NavItem>
-          <Link to="/import">Імпорт</Link>
+            <Link to="/sortedList">Відсортований список</Link>
           </NavItem>
           <UncontrolledDropdown nav inNavbar>
             <DropdownToggle nav caret>
               Options
             </DropdownToggle>
             <DropdownMenu right>
-              <DropdownItem>Option 1</DropdownItem>
               <DropdownItem>
                 {" "}
                 <NavItem>
-                  <NavLink href="/">Головна</NavLink>
+                  <Link to="/editing">Додати/Видалити</Link>
                 </NavItem>
               </DropdownItem>
               <DropdownItem divider />
-              <DropdownItem>Reset</DropdownItem>
+              <DropdownItem>
+                {" "}
+                <NavItem>
+                  <Link to="/import">Імпорт</Link>
+                </NavItem>
+              </DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
         </Nav>
