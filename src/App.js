@@ -6,6 +6,8 @@ import EditPage from "./components/Editing/EditPage";
 import ImportPage from "./components/Import/ImportPage";
 import SortListPage from "./components/List/SortListPage";
 import CatalogPage from "./components/Catalog/CatalogPage";
+import DeleteForm from "./components/Editing/DeleteForm";
+import AddForm from "./components/Editing/AddForm";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +21,16 @@ const router = createBrowserRouter([
       {
         path: "/editing",
         element: <EditPage />,
+        children: [
+          {
+            path: "add",
+            element: <AddForm />,
+          },
+          {
+            path: "delete",
+            element: <DeleteForm />,
+          },
+        ],
       },
       {
         path: "/import",

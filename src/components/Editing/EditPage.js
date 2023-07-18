@@ -1,26 +1,21 @@
-import { Fragment } from "react";
 import classes from "./EditPage.module.css";
-import AddForm from "./AddForm";
-import DeleteForm from "./DeleteForm";
+import ContainerWrapper from "../UI/ContainerWrapper";
+import { Outlet } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 function EditPage(props) {
+  const location = useLocation();
   return (
-    <Fragment>
-      <div className={` container-md my-5`}>
-        <div className="col-md-8 col-12 mx-auto">
-          <h2>Додати фільм</h2>
-          <div className="my-4">
-            <AddForm />
-          </div>
+    <ContainerWrapper>
+      <h2 className="text-center">Редагування даних</h2>
+      <ContainerWrapper>
+        {location.pathname === "/editing/add" && <h2>Додати фільм</h2>}
+        {location.pathname === "/editing/delete" && <h2>Видалити фільм</h2>}
+        <div className="my-4">
+          <Outlet></Outlet>
         </div>
-        <div className="col-md-8 col-12 mx-auto">
-          <h2>Видалити фільм</h2>
-          <div className="my-4">
-            <DeleteForm />
-          </div>
-        </div>
-      </div>
-    </Fragment>
+      </ContainerWrapper>
+    </ContainerWrapper>
   );
 }
 export default EditPage;

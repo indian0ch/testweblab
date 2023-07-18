@@ -40,7 +40,13 @@ function HeaderMenu(props) {
               <DropdownItem>
                 {" "}
                 <NavItem>
-                  <Link to="/editing">Додати/Видалити</Link>
+                  <Link to="/editing/add">Додати фільм</Link>
+                </NavItem>
+              </DropdownItem>
+              <DropdownItem>
+                {" "}
+                <NavItem>
+                  <Link to="/editing/delete">Видалити фільм</Link>
                 </NavItem>
               </DropdownItem>
               <DropdownItem divider />
