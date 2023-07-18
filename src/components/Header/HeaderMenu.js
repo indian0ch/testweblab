@@ -27,13 +27,13 @@ function HeaderMenu(props) {
       <Collapse isOpen={isOpen} navbar>
         <Nav className="me-auto" navbar>
           <NavItem>
-            <NavLink href="/">Каталог</NavLink>
+            <Link to="/">Каталог</Link>
           </NavItem>
           <NavItem>
-            <NavLink href="/">Додати/Видалити</NavLink>
+            <Link to="/editing">Додати/Видалити</Link>
           </NavItem>
           <NavItem>
-            <NavLink href="/">Імпорт</NavLink>
+          <Link to="/import">Імпорт</Link>
           </NavItem>
           <UncontrolledDropdown nav inNavbar>
             <DropdownToggle nav caret>

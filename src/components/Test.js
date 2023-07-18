@@ -1,7 +1,7 @@
 import { Button } from "reactstrap";
 
 function Test(props) {
-  getUsers();
+  // getUsers();
 
   return (
     <div>
