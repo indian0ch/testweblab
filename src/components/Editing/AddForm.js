@@ -48,8 +48,10 @@ function AddForm(props) {
   const formatRef = useRef();
   const actorsRef = useRef();
   const [isLoadingBtn, setIsLoadingBtn] = useState(false);
+  const [actorsArr, setActorsArr] = useState([]);
 
-  const url = useSelector((state) => state.urlManage.deleteUrl);
+  const url = useSelector((state) => state.urlManage.addUrl);
+  const token = useSelector((state) => state.tokenLoader.tokenJwt);
 
   function clickInputHandler(typeString) {
     dispatchInfo({ type: typeString, status: false });
@@ -69,20 +71,30 @@ function AddForm(props) {
       }
     });
     if (validateStatus === true) {
-      validateActors(actorsRef.current.value);
-      // actorsRef.current.value
+      const validatedArr = validateActors(actorsRef.current.value);
+      console.log(validatedArr);
+      setActorsArr(validatedArr);
     }
     return validateStatus;
   }
 
   function onSubmitHandler(event) {
     event.preventDefault();
-    setIsLoadingBtn(true);
+
     setTimeout(() => {
       setIsLoadingBtn(false);
     }, 1000);
+    setIsLoadingBtn(true);
+
     if (checkValidation()) {
-      // postFilm(url);
+      // console.log(actorsArr);
+
+      postFilm(url, token, {
+        title: titleRef.current.value,
+        year: yearRef.current.value,
+        format: formatRef.current.value,
+        actors: actorsArr,
+      });
     }
   }
 
