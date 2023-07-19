@@ -27,7 +27,7 @@ function CatalogPage(props) {
         <p className="fw-bold">
           Для перегляду інформації про фільм - клікніть на назву
         </p>
-        <div>
+        <div className="my-2">
           <Input
             type="checkbox"
             onClick={onCheckHandler}
