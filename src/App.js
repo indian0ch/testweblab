@@ -4,7 +4,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RootLayout from "./components/UI/RootLayout";
 import EditPage from "./components/Editing/EditPage";
 import ImportPage from "./components/Import/ImportPage";
-import SortListPage from "./components/List/SortListPage";
 import CatalogPage from "./components/Catalog/CatalogPage";
 import DeleteForm from "./components/Editing/DeleteForm";
 import AddForm from "./components/Editing/AddForm";
@@ -47,12 +46,8 @@ const router = createBrowserRouter([
         element: <ImportPage />,
       },
       {
-        path: "/sortedList",
-        element: <SortListPage />,
-      },
-      {
         path: "/*",
-        element: <SortListPage />,
+        element: <EditPage />,
       },
     ],
   },

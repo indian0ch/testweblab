@@ -29,9 +29,6 @@ function HeaderMenu(props) {
           <NavItem>
             <Link to="/catalog">Каталог</Link>
           </NavItem>
-          <NavItem>
-            <Link to="/sortedList">Відсортований список</Link>
-          </NavItem>
           <UncontrolledDropdown nav inNavbar>
             <DropdownToggle nav caret>
               Options
