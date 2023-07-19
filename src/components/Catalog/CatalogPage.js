@@ -22,19 +22,22 @@ function CatalogPage(props) {
 
   return (
     <ContainerWrapper>
-      <h2>Каталог фільмів</h2>
-      <div>
-        <Input
-          type="checkbox"
-          onClick={onCheckHandler}
-          checked={isSortChecked}
-        />{" "}
-        <Label>
-          Показати список фільмів, що відсортовані за назвою в алфавітному
-          порядку
-        </Label>
-      </div>
+      <h2 className="text-center">Каталог фільмів</h2>
       <div className="my-4">
+        <p className="fw-bold">
+          Для перегляду інформації про фільм - клікніть на назву
+        </p>
+        <div>
+          <Input
+            type="checkbox"
+            onClick={onCheckHandler}
+            checked={isSortChecked}
+          />{" "}
+          <Label>
+            Показати список фільмів, що відсортовані за назвою в алфавітному
+            порядку
+          </Label>
+        </div>
         <Outlet context={url}></Outlet>
       </div>
       <Pagination checkStatus={isSortChecked} />
