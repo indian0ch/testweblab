@@ -1,5 +1,5 @@
-export async function getMovies(url, token) {
-  return fetch(url, {
+export async function getMovies(url, token, id = "") {
+  return fetch(url + id, {
     method: "GET",
     headers: {
       "Content-Type": "application/json; charset=utf-8",

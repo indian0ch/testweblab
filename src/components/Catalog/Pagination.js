@@ -1,10 +1,17 @@
 import { Button } from "reactstrap";
-import { useReducer } from "react";
+import { useReducer, useEffect } from "react";
 import { Link } from "react-router-dom";
-import classes from "./Catalog.module.css";
 
 function reducerPagination(state, action) {
   switch (action.type) {
+    case "initial_state": {
+      return {
+        isPrevActive: false,
+        firstLink: 1,
+        secondLink: 2,
+        thirdLink: 3,
+      };
+    }
     case "next_click": {
       return {
         isPrevActive: true,
@@ -39,6 +46,10 @@ function Pagination(props) {
     secondLink: 2,
     thirdLink: 3,
   });
+
+  useEffect(() => {
+    dispatchPagination({ type: "initial_state" });
+  }, [props.checkStatus]);
 
   return (
     <nav className="d-flex justify-content-center">

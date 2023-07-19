@@ -3,8 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   deleteUrl: "http://localhost:8000/api/v1/movies/1",
   addUrl: "http://localhost:8000/api/v1/movies",
-  getList:
-    "http://localhost:8000/api/v1/movies?sort=year&order=DESC&limit=10&offset=0",
+  getList: "http://localhost:8000/api/v1/movies/",
+  getSortList:
+    "http://localhost:8000/api/v1/movies?sort=title&order=DESC&limit=10&offset=0",
 };
 
 const urlSlice = createSlice({
