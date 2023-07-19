@@ -27,7 +27,7 @@ function HeaderMenu(props) {
       <Collapse isOpen={isOpen} navbar>
         <Nav className="me-auto" navbar>
           <NavItem>
-            <Link to="/">Каталог</Link>
+            <Link to="/catalog">Каталог</Link>
           </NavItem>
           <NavItem>
             <Link to="/sortedList">Відсортований список</Link>

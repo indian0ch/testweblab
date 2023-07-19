@@ -2,10 +2,11 @@ import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 
 import urlReducer from "./urlSlice";
+import tokenReducer from "./tokenSlice";
 
 const rootReducer = combineReducers({
   urlManage: urlReducer,
-  //   cartFunctional: cartReducer,
+  tokenLoader: tokenReducer,
 });
 
 const store = configureStore({

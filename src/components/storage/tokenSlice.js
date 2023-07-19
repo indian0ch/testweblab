@@ -1,19 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  isColorActive: 0,
+  tokenJwt: 0,
 };
 
-const colorChoosenSlice = createSlice({
-  name: "colorChoose",
+const tokenSlice = createSlice({
+  name: "tokenLoader",
   initialState: initialState,
   reducers: {
-    changeButtonId: (state, action) => {
-      const id = action.payload;
-      state.isColorActive = id;
+    setToken: (state, action) => {
+      state.tokenJwt = action.payload;
     },
   },
 });
-export const colorChoosenActions = colorChoosenSlice.actions;
 
-export default colorChoosenSlice.reducer;
+export const tokenLoaderActions = tokenSlice.actions;
+
+export default tokenSlice.reducer;

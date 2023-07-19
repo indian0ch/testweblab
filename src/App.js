@@ -8,6 +8,10 @@ import SortListPage from "./components/List/SortListPage";
 import CatalogPage from "./components/Catalog/CatalogPage";
 import DeleteForm from "./components/Editing/DeleteForm";
 import AddForm from "./components/Editing/AddForm";
+import CatalogList from "./components/Catalog/CatalogList";
+import { tokenLoaderActions } from "./components/storage/tokenSlice";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 
 const router = createBrowserRouter([
   {
@@ -15,8 +19,14 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     children: [
       {
-        index: true,
+        index: "/catalog",
         element: <CatalogPage />,
+        children: [
+          {
+            path: ":pageNumber",
+            element: <CatalogList />,
+          },
+        ],
       },
       {
         path: "/editing",
@@ -40,11 +50,38 @@ const router = createBrowserRouter([
         path: "/sortedList",
         element: <SortListPage />,
       },
+      {
+        path: "/*",
+        element: <SortListPage />,
+      },
     ],
   },
 ]);
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    fetch("http://localhost:8000/api/v1/sessions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      body: JSON.stringify({
+        email: "fesiukandrey146@gmail.com",
+        password: "95219521",
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const token = data.token;
+        dispatch(tokenLoaderActions.setToken(token)); // Dispatch the action to update the token in the store
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }, []);
+
   return <RouterProvider router={router}></RouterProvider>;
 }
 

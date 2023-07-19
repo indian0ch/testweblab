@@ -1,13 +1,16 @@
-import classes from "./Catalog.module.css";
+import ContainerWrapper from "../UI/ContainerWrapper";
+import Pagination from "./Pagination";
+import { Outlet } from "react-router-dom";
 
 function CatalogPage(props) {
   return (
-    <div className={`container-md my-5`}>
-      <div className="col-md-8 col-12 mx-auto">
-        <h2>Каталог фільмів</h2>
-        <div className="my-4"></div>
+    <ContainerWrapper>
+      <h2>Каталог фільмів</h2>
+      <div className="my-4">
+        <Outlet></Outlet>
       </div>
-    </div>
+      <Pagination />
+    </ContainerWrapper>
   );
 }
 export default CatalogPage;
