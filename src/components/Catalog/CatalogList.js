@@ -47,7 +47,7 @@ function CatalogList(props) {
   return (
     <ListGroup className={classes.listContainer}>
       {isSpinnerActive ? (
-        <Spinner color="primary" size="">
+        <Spinner className="mx-auto" color="primary" size="">
           Loading...
         </Spinner>
       ) : (

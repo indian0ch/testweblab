@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { getMovies } from "./getMovies";
 import { paginationCounterActions } from "../storage/paginationSlice";
+import SearchBlock from "./SearchBlock";
 
 function CatalogPage(props) {
   const dispatch = useDispatch();
@@ -29,7 +30,7 @@ function CatalogPage(props) {
 
   const fetchPageCounts = async () => {
     //Отримання загальох кількості фільмів для налаштування пагінації
-    const moviesData = await getMovies({url:urlAllItems,token});
+    const moviesData = await getMovies({ url: urlAllItems, token });
     if (moviesData) {
       dispatch(paginationCounterActions.setPageCounters(moviesData.length));
     }
@@ -40,6 +41,7 @@ function CatalogPage(props) {
     <ContainerWrapper>
       <h2 className="text-center">Каталог фільмів</h2>
       <div className="my-4">
+        <SearchBlock />
         <p className="fw-bold">
           Для перегляду інформації про фільм - клікніть на назву
         </p>
