@@ -32,7 +32,10 @@ function CatalogList(props) {
   useEffect(() => {
     setSpinnerActive(true);
     const fetchMovies = async () => {
-      const moviesData = await getMovies(url, token, (pageNumber - 1) * 5);
+      let number = pageNumber;
+      pageNumber === "catalog" && (number = 1);
+
+      const moviesData = await getMovies({url, token, offset:(number - 1) * 5});
       if (moviesData) {
         setSpinnerActive(false);
         setLoadedRows(adjustPagination(moviesData, token));

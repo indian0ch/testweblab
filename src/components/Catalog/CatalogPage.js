@@ -29,7 +29,7 @@ function CatalogPage(props) {
 
   const fetchPageCounts = async () => {
     //Отримання загальох кількості фільмів для налаштування пагінації
-    const moviesData = await getMovies(urlAllItems, token);
+    const moviesData = await getMovies({url:urlAllItems,token});
     if (moviesData) {
       dispatch(paginationCounterActions.setPageCounters(moviesData.length));
     }

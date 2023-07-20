@@ -25,8 +25,6 @@ function reducerPagination(state, action) {
       };
     }
     case "next_click": {
-      console.log(state.countsPage);
-      console.log(state.secondLink === state.countsPage);
       return {
         ...state,
         isPrevActive: true,

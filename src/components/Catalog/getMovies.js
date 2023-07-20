@@ -1,12 +1,29 @@
-export async function getMovies(url, token, offset = 0, id = "") {
-  let offsetString = "";
-  offset !== 0 && (offsetString += `&offset=${offset}`);
+export async function getMovies(params) {
+  let id = "";
+  if (params.id) {
+    id = params.id;
+  }
 
-  return fetch(url + id + offsetString, {
+  let offsetString = "";
+  if (params.offset) {
+    params.offset !== 0 && (offsetString += `&offset=${params.offset}`);
+  }
+
+  let titleString = "";
+  if (params.title) {
+    titleString += `&title=${params.title}`;
+  }
+
+  let actorString = "";
+  if (params.actor) {
+    actorString += `&actor=${params.actor}`;
+  }
+
+  return fetch(params.url + id + offsetString + titleString, {
     method: "GET",
     headers: {
       "Content-Type": "application/json; charset=utf-8",
-      Authorization: `${token}`,
+      Authorization: `${params.token}`,
     },
   })
     .then((response) => {

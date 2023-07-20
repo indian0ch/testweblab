@@ -13,7 +13,7 @@ function ModalInfo(props) {
   useEffect(() => {
     //Отримаємо інфо по конкретному фільмі
     const fetchMovie = async () => {
-      const infoMovie = await getMovies(url, token, 0, props.id);
+      const infoMovie = await getMovies({url, token, id:props.id});
       if (infoMovie) {
         setMovieData(infoMovie);
       }
