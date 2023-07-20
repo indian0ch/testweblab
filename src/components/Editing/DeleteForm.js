@@ -34,9 +34,10 @@ function DeleteForm(props) {
     event.preventDefault();
     if (chechValidation()) {
       const isSuccess = await deleteFilm(url, token, idRef.current.value);
-      console.log(isSuccess.error);
-      if (isSuccess.error.code === "MOVIE_NOT_FOUND") {
+      if (isSuccess.error) {
         setErrorMessage(true);
+      } else {
+        setSuccessMessage(true);
       }
     }
   }
@@ -53,6 +54,7 @@ function DeleteForm(props) {
               type="number"
               onClick={() => {
                 setErrorMessage(false);
+                setSuccessMessage(false);
                 setIdEmpty(false);
               }}
               invalid={isIdEmpty}
@@ -67,7 +69,7 @@ function DeleteForm(props) {
       <Button color="warning" size="lg" type="submit">
         Видалити
       </Button>
-      {errorMessage && (
+      {errorMessage === true && (
         <Alert color="danger" className="col-md-12 col-sm my-3">
           Фільм з таким унікальним ідентифікатором не знайдено!
         </Alert>
