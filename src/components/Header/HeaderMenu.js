@@ -1,4 +1,5 @@
 import { useState } from "react";
+import classes from "./Header.module.css";
 import { Link } from "react-router-dom";
 import {
   Collapse,
@@ -26,31 +27,39 @@ function HeaderMenu(props) {
 
       <Collapse isOpen={isOpen} navbar>
         <Nav className="me-auto" navbar>
-          <NavItem>
-            <Link to="/catalog">Каталог</Link>
+          <NavItem className="d-flex align-items-center">
+            <Link className={classes.link} to="/catalog">
+              Каталог
+            </Link>
           </NavItem>
           <UncontrolledDropdown nav inNavbar>
-            <DropdownToggle nav caret>
-              Options
+            <DropdownToggle className={classes.link} nav caret>
+              Сервіси
             </DropdownToggle>
-            <DropdownMenu right>
+            <DropdownMenu end>
               <DropdownItem>
                 {" "}
                 <NavItem>
-                  <Link to="/editing/add">Додати фільм</Link>
+                  <Link className={classes.link} to="/editing/add">
+                    Додати фільм
+                  </Link>
                 </NavItem>
               </DropdownItem>
               <DropdownItem>
                 {" "}
                 <NavItem>
-                  <Link to="/editing/delete">Видалити фільм</Link>
+                  <Link className={classes.link} to="/editing/delete">
+                    Видалити фільм
+                  </Link>
                 </NavItem>
               </DropdownItem>
               <DropdownItem divider />
               <DropdownItem>
                 {" "}
                 <NavItem>
-                  <Link to="/import">Імпорт</Link>
+                  <Link className={classes.link} to="/import">
+                    Імпорт
+                  </Link>
                 </NavItem>
               </DropdownItem>
             </DropdownMenu>

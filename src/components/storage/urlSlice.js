@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  deleteUrl: "http://localhost:8000/api/v1/movies/1",
+  deleteUrl: "http://localhost:8000/api/v1/movies/",
   addUrl: "http://localhost:8000/api/v1/movies",
   getList: "http://localhost:8000/api/v1/movies/",
   getSortList:

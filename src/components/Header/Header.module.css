@@ -4,3 +4,9 @@
     background-color: #212529;
     padding: 6rem 2rem 2rem 2rem;
 }
+
+.link {
+    text-decoration: none;
+    color: black;
+    align-items: center;
+}
