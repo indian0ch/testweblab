@@ -4,6 +4,21 @@ import { useSelector, useDispatch } from "react-redux";
 import MovieRow from "./MovieRow";
 import { getMovies } from "./getMovies";
 import { useEffect, useState } from "react";
+import classes from "./Catalog.module.css";
+
+function adjustPagination(moviesData, token) {
+  const moviesComponentArr = [];
+
+  for (let i in moviesData) {
+    const item = moviesData[i];
+    if (item) {
+      moviesComponentArr.push(
+        <MovieRow key={item.id} title={item.title} id={item.id} token={token} />
+      );
+    }
+  }
+  return moviesComponentArr;
+}
 
 function CatalogList(props) {
   const { pageNumber } = useParams();
@@ -17,27 +32,17 @@ function CatalogList(props) {
   useEffect(() => {
     setSpinnerActive(true);
     const fetchMovies = async () => {
-      const moviesData = await getMovies(url, token);
+      const moviesData = await getMovies(url, token, (pageNumber - 1) * 5);
       if (moviesData) {
         setSpinnerActive(false);
-        const moviesComponentArr = await moviesData.map((movie) => {
-          return (
-            <MovieRow
-              key={movie.id}
-              title={movie.title}
-              id={movie.id}
-              token={token}
-            />
-          );
-        });
-        setLoadedRows(moviesComponentArr);
+        setLoadedRows(adjustPagination(moviesData, token));
       }
     };
     fetchMovies();
-  }, [url, token]);
+  }, [url, token, pageNumber]);
 
   return (
-    <ListGroup>
+    <ListGroup className={classes.listContainer}>
       {isSpinnerActive ? (
         <Spinner color="primary" size="">
           Loading...

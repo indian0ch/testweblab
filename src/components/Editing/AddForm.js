@@ -70,11 +70,6 @@ function AddForm(props) {
         validateStatus = false;
       }
     });
-    if (validateStatus === true) {
-      const validatedArr = validateActors(actorsRef.current.value);
-      console.log(validatedArr);
-      setActorsArr(validatedArr);
-    }
     return validateStatus;
   }
 
@@ -87,14 +82,18 @@ function AddForm(props) {
     setIsLoadingBtn(true);
 
     if (checkValidation()) {
-      // console.log(actorsArr);
+      const validatedArr = validateActors(actorsRef.current.value);
+      console.log(validatedArr);
+      if (validatedArr) {
+        // setActorsArr(validatedArr);
+        postFilm(url, token, {
+          title: titleRef.current.value,
+          year: yearRef.current.value,
+          format: formatRef.current.value,
+          actors: validatedArr,
+        });
+      }
 
-      postFilm(url, token, {
-        title: titleRef.current.value,
-        year: yearRef.current.value,
-        format: formatRef.current.value,
-        actors: actorsArr,
-      });
     }
   }
 

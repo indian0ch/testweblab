@@ -1,5 +1,8 @@
-export async function getMovies(url, token, id = "") {
-  return fetch(url + id, {
+export async function getMovies(url, token, offset = 0, id = "") {
+  let offsetString = "";
+  offset !== 0 && (offsetString += `&offset=${offset}`);
+
+  return fetch(url + id + offsetString, {
     method: "GET",
     headers: {
       "Content-Type": "application/json; charset=utf-8",
@@ -13,6 +16,6 @@ export async function getMovies(url, token, id = "") {
       return dataResponse.data;
     })
     .catch((error) => {
-      alert("Error:", error);
+      console.log("Error:", error);
     });
 }

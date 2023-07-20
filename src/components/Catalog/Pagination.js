@@ -1,55 +1,73 @@
 import { Button } from "reactstrap";
 import { useReducer, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
 function reducerPagination(state, action) {
   switch (action.type) {
     case "initial_state": {
-      return {
-        isPrevActive: false,
-        firstLink: 1,
-        secondLink: 2,
-        thirdLink: 3,
-      };
-    }
-    case "next_click": {
-      return {
-        isPrevActive: true,
-        firstLink: state.firstLink++,
-        secondLink: state.secondLink++,
-        thirdLink: state.thirdLink++,
-      };
-    }
-    case "previous_click": {
-      if (state.firstLink === 1) {
+      const count = action.counts;
+      if (count <= 1) {
         return {
+          ...state,
           isPrevActive: false,
-          firstLink: state.firstLink--,
-          secondLink: state.secondLink--,
-          thirdLink: state.thirdLink--,
+          countsPage: count,
+          secondLink: 1,
+          isNextActive: false,
         };
       }
       return {
+        ...state,
+        isPrevActive: false,
+        countsPage: count,
+        secondLink: 1,
+        isNextActive: true,
+      };
+    }
+    case "next_click": {
+      console.log(state.countsPage);
+      console.log(state.secondLink === state.countsPage);
+      return {
+        ...state,
         isPrevActive: true,
-        firstLink: state.firstLink--,
+        secondLink: state.secondLink++,
+        isNextActive: state.secondLink === state.countsPage,
+      };
+    }
+    case "previous_click": {
+      if (state.secondLink === 1) {
+        return {
+          ...state,
+          isPrevActive: false,
+          secondLink: state.secondLink--,
+          isNextActive: true,
+        };
+      }
+      return {
+        ...state,
         secondLink: state.secondLink--,
-        thirdLink: state.thirdLink--,
+        isNextActive: true,
       };
     }
   }
 }
 
 function Pagination(props) {
+  let navigate = useNavigate();
   const [statePagination, dispatchPagination] = useReducer(reducerPagination, {
     isPrevActive: false,
-    firstLink: 1,
-    secondLink: 2,
-    thirdLink: 3,
+    secondLink: 1,
+    countsPage: 0,
+    isSecondActive: true,
+    isNextActive: true,
   });
+  const pagesCounts = useSelector(
+    (state) => state.paginationCounter.pagesCount
+  );
 
   useEffect(() => {
-    dispatchPagination({ type: "initial_state" });
-  }, [props.checkStatus]);
+    dispatchPagination({ type: "initial_state", counts: pagesCounts });
+  }, [pagesCounts]);
 
   return (
     <nav className="d-flex justify-content-center">
@@ -61,30 +79,30 @@ function Pagination(props) {
         >
           <Button
             className="page-link"
-            onClick={() => dispatchPagination({ type: "previous_click" })}
+            onClick={() => {
+              dispatchPagination({ type: "previous_click" });
+              navigate(`/${statePagination.secondLink - 1}`);
+            }}
           >
             Previous
           </Button>
-        </li>
-        <li className="page-item">
-          <Link className="page-link" to={`${statePagination.firstLink}`}>
-            {statePagination.firstLink}
-          </Link>
         </li>
         <li className="page-item active">
           <Link className="page-link" to={`${statePagination.secondLink}`}>
             {statePagination.secondLink}
           </Link>
         </li>
-        <li className="page-item">
-          <Link className="page-link" to={`${statePagination.thirdLink}`}>
-            {statePagination.thirdLink}
-          </Link>
-        </li>
-        <li className="page-item ">
+        <li
+          className={`page-item ${
+            statePagination.isNextActive === false ? "disabled" : null
+          }`}
+        >
           <Button
             className="page-link"
-            onClick={() => dispatchPagination({ type: "next_click" })}
+            onClick={() => {
+              dispatchPagination({ type: "next_click" });
+              navigate(`/${statePagination.secondLink + 1}`);
+            }}
           >
             Next
           </Button>

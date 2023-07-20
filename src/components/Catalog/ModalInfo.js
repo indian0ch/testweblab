@@ -8,11 +8,12 @@ function ModalInfo(props) {
   const [actorsList, setActorsList] = useState();
 
   const token = useSelector((state) => state.tokenLoader.tokenJwt);
-  const url = useSelector((state) => state.urlManage.getList);
+  const url = useSelector((state) => state.urlManage.deleteUrl);
 
   useEffect(() => {
+    //Отримаємо інфо по конкретному фільмі
     const fetchMovie = async () => {
-      const infoMovie = await getMovies(url, token, props.id);
+      const infoMovie = await getMovies(url, token, 0, props.id);
       if (infoMovie) {
         setMovieData(infoMovie);
       }
@@ -21,6 +22,7 @@ function ModalInfo(props) {
   }, []);
 
   useEffect(() => {
+    //Розкидуємо інфо по параграфам
     if (movieData.actors) {
       const actorsParagraphs = movieData.actors
         .map((actor) => actor.name)
