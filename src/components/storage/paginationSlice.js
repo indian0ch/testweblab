@@ -10,7 +10,7 @@ const paginationSlice = createSlice({
   reducers: {
     setPageCounters: (state, action) => {
       const arrLength = action.payload;
-      state.pagesCount = arrLength % 5;
+      state.pagesCount = Math.ceil(arrLength / 5);
     },
   },
 });
