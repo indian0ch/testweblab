@@ -21,17 +21,18 @@ function ImportForm(props) {
 
   function changeFileHandler(event) {
     const selectedFile = event.target.files[0];
+    
     console.log(selectedFile);
     setFile(selectedFile);
   }
 
   function onSubmitHandler(event) {
     event.preventDefault();
-    const form = document.getElementById('importForm');
+    // const form = document.getElementById('importForm');
     const formData = new FormData();
 
     // console.log(Array.from(formData));
-    formData.append("movies=@", file.path);
+    formData.append("movies", file.path);
 
     console.log(Array.from(formData));
 

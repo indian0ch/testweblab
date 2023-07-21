@@ -27,9 +27,14 @@ function HeaderMenu(props) {
 
       <Collapse isOpen={isOpen} navbar>
         <Nav className="me-auto" navbar>
-          <NavItem className="d-flex align-items-center">
+          <NavItem className="d-flex align-items-center mx-2">
             <Link className={classes.link} to="/catalog">
               Каталог
+            </Link>
+          </NavItem>
+          <NavItem className="d-flex align-items-center">
+            <Link className={classes.link} to="/search">
+              Пошук
             </Link>
           </NavItem>
           <UncontrolledDropdown nav inNavbar>

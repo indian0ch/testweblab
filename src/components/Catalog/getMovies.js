@@ -19,7 +19,7 @@ export async function getMovies(params) {
     actorString += `&actor=${params.actor}`;
   }
 
-  return fetch(params.url + id + offsetString + titleString, {
+  return fetch(params.url + id + offsetString + titleString + actorString, {
     method: "GET",
     headers: {
       "Content-Type": "application/json; charset=utf-8",

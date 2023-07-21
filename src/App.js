@@ -11,6 +11,7 @@ import CatalogList from "./components/Catalog/CatalogList";
 import { tokenLoaderActions } from "./components/storage/tokenSlice";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
+import SearchPage from "./components/Search/SeachPage";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
       {
         path: "/import",
         element: <ImportPage />,
+      },
+      {
+        path: "/search",
+        element: <SearchPage />,
       },
       {
         path: "/*",
