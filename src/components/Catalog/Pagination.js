@@ -1,13 +1,12 @@
 import { Button } from "reactstrap";
 import { useReducer, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 function reducerPagination(state, action) {
   switch (action.type) {
     case "initial_state": {
       return {
-        ...state,
         isPrevActive: false,
         pageLink: 1,
         isNextActive: true,
@@ -15,7 +14,6 @@ function reducerPagination(state, action) {
     }
     case "next_click": {
       return {
-        ...state,
         isPrevActive: true,
         pageLink: state.pageLink++,
         isNextActive: action.status,
@@ -24,7 +22,6 @@ function reducerPagination(state, action) {
     case "previous_click": {
       if (state.pageLink === 1) {
         return {
-          ...state,
           isPrevActive: false,
           pageLink: state.pageLink--,
           isNextActive: true,
@@ -47,16 +44,24 @@ function reducerPagination(state, action) {
 
 function Pagination(props) {
   let navigate = useNavigate();
+  const { pageNumber } = useParams();
   const [statePagination, dispatchPagination] = useReducer(reducerPagination, {
     isPrevActive: false,
     pageLink: 1,
-    isSecondActive: true,
     isNextActive: true,
   });
 
   const nextAvailability = useSelector(
     (state) => state.paginationCounter.isNextAvailable
   );
+
+  useEffect(() => {
+    if (pageNumber === "1") {
+      dispatchPagination({
+        type: "initial_state",
+      });
+    }
+  }, [pageNumber]);
 
   useEffect(() => {
     dispatchPagination({

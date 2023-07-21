@@ -1,11 +1,12 @@
 import ContainerWrapper from "../UI/ContainerWrapper";
 import Pagination from "./Pagination";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { Input, Label } from "reactstrap";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 
 function CatalogPage(props) {
+  const navigate = useNavigate();
   const urlUnsorted = useSelector((state) => state.urlManage.getList);
   const urlSorted = useSelector((state) => state.urlManage.getSortList);
 
@@ -19,6 +20,7 @@ function CatalogPage(props) {
     } else {
       setUrlForLoad(urlSorted);
     }
+    navigate(`/1`);
   }
 
   return (
