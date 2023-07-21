@@ -5,22 +5,26 @@ import MovieRow from "./MovieRow";
 import { getMovies } from "./getMovies";
 import { useEffect, useState } from "react";
 import classes from "./Catalog.module.css";
+import { paginationCounterActions } from "../storage/paginationSlice";
 
 function adjustPagination(moviesData, token) {
   const moviesComponentArr = [];
+  let counterItems = 0;
 
   for (let i in moviesData) {
     const item = moviesData[i];
     if (item) {
+      counterItems++;
       moviesComponentArr.push(
         <MovieRow key={item.id} title={item.title} id={item.id} token={token} />
       );
     }
   }
-  return moviesComponentArr;
+  return [moviesComponentArr, counterItems];
 }
 
 function CatalogList(props) {
+  const dispatch = useDispatch();
   const { pageNumber } = useParams();
   const url = useOutletContext();
 
@@ -35,10 +39,20 @@ function CatalogList(props) {
       let number = pageNumber;
       pageNumber === "catalog" && (number = 1);
 
-      const moviesData = await getMovies({url, token, offset:(number - 1) * 5});
+      const moviesData = await getMovies({
+        url,
+        token,
+        offset: (number - 1) * 5,
+      });
       if (moviesData) {
         setSpinnerActive(false);
-        setLoadedRows(adjustPagination(moviesData, token));
+        const [arrMovies, counts] = adjustPagination(moviesData, token);
+
+        counts < 5
+          ? dispatch(paginationCounterActions.setNextAvailable(false))
+          : dispatch(paginationCounterActions.setNextAvailable(true));
+
+        setLoadedRows(arrMovies);
       }
     };
     fetchMovies();

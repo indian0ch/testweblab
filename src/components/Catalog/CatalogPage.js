@@ -2,18 +2,12 @@ import ContainerWrapper from "../UI/ContainerWrapper";
 import Pagination from "./Pagination";
 import { Outlet } from "react-router-dom";
 import { Input, Label } from "reactstrap";
-import { useSelector, useDispatch } from "react-redux";
-import { useState, useEffect } from "react";
-import { getMovies } from "./getMovies";
-import { paginationCounterActions } from "../storage/paginationSlice";
+import { useSelector } from "react-redux";
+import { useState } from "react";
 
 function CatalogPage(props) {
-  const dispatch = useDispatch();
-
   const urlUnsorted = useSelector((state) => state.urlManage.getList);
   const urlSorted = useSelector((state) => state.urlManage.getSortList);
-  const urlAllItems = useSelector((state) => state.urlManage.addUrl);
-  const token = useSelector((state) => state.tokenLoader.tokenJwt);
 
   const [isSortChecked, setSortChecked] = useState(false);
   const [urlForLoad, setUrlForLoad] = useState(urlUnsorted);
@@ -26,16 +20,6 @@ function CatalogPage(props) {
       setUrlForLoad(urlSorted);
     }
   }
-
-  const fetchPageCounts = async () => {
-    //Отримання загальох кількості фільмів для налаштування пагінації
-    const moviesData = await getMovies({ url: urlAllItems, token });
-    console.log(moviesData);
-    if (moviesData) {
-      dispatch(paginationCounterActions.setPageCounters(moviesData.length));
-    }
-  };
-  fetchPageCounts();
 
   return (
     <ContainerWrapper>

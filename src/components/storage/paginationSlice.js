@@ -1,16 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  pagesCount: 0,
+  isNextAvailable: true,
 };
 
 const paginationSlice = createSlice({
   name: "paginationCounter",
   initialState: initialState,
   reducers: {
-    setPageCounters: (state, action) => {
-      const arrLength = action.payload;
-      state.pagesCount = Math.ceil(arrLength / 5);
+    setNextAvailable: (state, action) => {
+      const status = action.payload;
+      state.isNextAvailable = status;
     },
   },
 });

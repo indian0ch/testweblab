@@ -1,52 +1,45 @@
 import { Button } from "reactstrap";
 import { useReducer, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 function reducerPagination(state, action) {
   switch (action.type) {
     case "initial_state": {
-      const count = action.counts;
-      if (count <= 1) {
-        return {
-          ...state,
-          isPrevActive: false,
-          countsPage: count,
-          secondLink: 1,
-          isNextActive: false,
-        };
-      }
       return {
         ...state,
         isPrevActive: false,
-        countsPage: count,
-        secondLink: 1,
+        pageLink: 1,
         isNextActive: true,
       };
     }
     case "next_click": {
-      console.log(state.countsPage);
-      console.log(state.secondLink);
       return {
         ...state,
         isPrevActive: true,
-        secondLink: state.secondLink++,
-        isNextActive: true,
+        pageLink: state.pageLink++,
+        isNextActive: action.status,
       };
     }
     case "previous_click": {
-      if (state.secondLink === 1) {
+      if (state.pageLink === 1) {
         return {
           ...state,
           isPrevActive: false,
-          secondLink: state.secondLink--,
+          pageLink: state.pageLink--,
           isNextActive: true,
         };
       }
       return {
         ...state,
-        secondLink: state.secondLink--,
+        pageLink: state.pageLink--,
         isNextActive: true,
+      };
+    }
+    case "next_status_change": {
+      return {
+        ...state,
+        isNextActive: action.status,
       };
     }
   }
@@ -56,18 +49,21 @@ function Pagination(props) {
   let navigate = useNavigate();
   const [statePagination, dispatchPagination] = useReducer(reducerPagination, {
     isPrevActive: false,
-    secondLink: 1,
-    countsPage: 0,
+    pageLink: 1,
     isSecondActive: true,
     isNextActive: true,
   });
-  const pagesCounts = useSelector(
-    (state) => state.paginationCounter.pagesCount
+
+  const nextAvailability = useSelector(
+    (state) => state.paginationCounter.isNextAvailable
   );
 
   useEffect(() => {
-    dispatchPagination({ type: "initial_state", counts: pagesCounts });
-  }, [pagesCounts]);
+    dispatchPagination({
+      type: "next_status_change",
+      status: nextAvailability,
+    });
+  }, [nextAvailability]);
 
   return (
     <nav className="d-flex justify-content-center">
@@ -81,15 +77,15 @@ function Pagination(props) {
             className="page-link"
             onClick={() => {
               dispatchPagination({ type: "previous_click" });
-              navigate(`/${statePagination.secondLink - 1}`);
+              navigate(`/${statePagination.pageLink - 1}`);
             }}
           >
             Previous
           </Button>
         </li>
         <li className="page-item active">
-          <Link className="page-link" to={`${statePagination.secondLink}`}>
-            {statePagination.secondLink}
+          <Link className="page-link" to={`${statePagination.pageLink}`}>
+            {statePagination.pageLink}
           </Link>
         </li>
         <li
@@ -100,8 +96,11 @@ function Pagination(props) {
           <Button
             className="page-link"
             onClick={() => {
-              dispatchPagination({ type: "next_click" });
-              navigate(`/${statePagination.secondLink + 1}`);
+              dispatchPagination({
+                type: "next_click",
+                status: nextAvailability,
+              });
+              navigate(`/${statePagination.pageLink + 1}`);
             }}
           >
             Next
