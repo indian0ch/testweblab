@@ -16,7 +16,6 @@ export async function importMovie(token, file) {
     requestOptions
   )
     .then((response) => {
-      console.log(response);
       return response.json();
     })
     .then((data) => {

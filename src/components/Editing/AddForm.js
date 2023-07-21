@@ -83,7 +83,6 @@ function AddForm(props) {
 
     if (checkValidation()) {
       const validatedArr = validateActors(actorsRef.current.value);
-      console.log(validatedArr);
       if (validatedArr) {
         // setActorsArr(validatedArr);
         postFilm(url, token, {
