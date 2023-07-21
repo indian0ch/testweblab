@@ -17,7 +17,6 @@ function CatalogPage(props) {
 
   const [isSortChecked, setSortChecked] = useState(false);
   const [urlForLoad, setUrlForLoad] = useState(urlUnsorted);
-  const [urlForCounts, setUrlForCounts] = useState(urlAllItems);
 
   function onCheckHandler(event) {
     setSortChecked(!isSortChecked);
@@ -30,7 +29,8 @@ function CatalogPage(props) {
 
   const fetchPageCounts = async () => {
     //Отримання загальох кількості фільмів для налаштування пагінації
-    const moviesData = await getMovies({ url: urlForCounts, token });
+    const moviesData = await getMovies({ url: urlAllItems, token });
+    console.log(moviesData);
     if (moviesData) {
       dispatch(paginationCounterActions.setPageCounters(moviesData.length));
     }

@@ -25,11 +25,13 @@ function reducerPagination(state, action) {
       };
     }
     case "next_click": {
+      console.log(state.countsPage);
+      console.log(state.secondLink);
       return {
         ...state,
         isPrevActive: true,
         secondLink: state.secondLink++,
-        isNextActive: state.secondLink === state.countsPage,
+        isNextActive: true,
       };
     }
     case "previous_click": {
