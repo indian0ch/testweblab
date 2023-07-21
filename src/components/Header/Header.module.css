@@ -10,3 +10,9 @@
     color: black;
     align-items: center;
 }
+
+.navItem{
+    display: flex;
+    align-items: center;
+    margin-right: 1rem;
+}

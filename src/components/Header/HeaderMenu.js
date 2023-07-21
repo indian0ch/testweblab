@@ -1,6 +1,6 @@
 import { useState } from "react";
 import classes from "./Header.module.css";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import {
   Collapse,
   Navbar,
@@ -8,7 +8,6 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink,
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
@@ -27,15 +26,15 @@ function HeaderMenu(props) {
 
       <Collapse isOpen={isOpen} navbar>
         <Nav className="me-auto" navbar>
-          <NavItem className="d-flex align-items-center mx-2">
-            <Link className={classes.link} to="/catalog">
+          <NavItem className={classes.navItem}>
+            <NavLink className={classes.link} to="/catalog" onClick={toggle}>
               Каталог
-            </Link>
+            </NavLink>
           </NavItem>
-          <NavItem className="d-flex align-items-center">
-            <Link className={classes.link} to="/search">
+          <NavItem className={classes.navItem} onClick={toggle}>
+            <NavLink className={classes.link} to="/search">
               Пошук
-            </Link>
+            </NavLink>
           </NavItem>
           <UncontrolledDropdown nav inNavbar>
             <DropdownToggle className={classes.link} nav caret>
@@ -45,7 +44,7 @@ function HeaderMenu(props) {
               <DropdownItem>
                 {" "}
                 <NavItem>
-                  <Link className={classes.link} to="/editing/add">
+                  <Link className={classes.link} to="/editing/add" onClick={toggle}>
                     Додати фільм
                   </Link>
                 </NavItem>
@@ -53,7 +52,7 @@ function HeaderMenu(props) {
               <DropdownItem>
                 {" "}
                 <NavItem>
-                  <Link className={classes.link} to="/editing/delete">
+                  <Link className={classes.link} to="/editing/delete" onClick={toggle}>
                     Видалити фільм
                   </Link>
                 </NavItem>
@@ -62,7 +61,7 @@ function HeaderMenu(props) {
               <DropdownItem>
                 {" "}
                 <NavItem>
-                  <Link className={classes.link} to="/import">
+                  <Link className={classes.link} to="/import" onClick={toggle}>
                     Імпорт
                   </Link>
                 </NavItem>

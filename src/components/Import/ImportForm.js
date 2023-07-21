@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import {
   FormGroup,
   Form,
@@ -9,32 +9,37 @@ import {
   Col,
   Button,
   FormText,
+  Spinner,
 } from "reactstrap";
 import { useSelector } from "react-redux";
 import { importMovie } from "./importMovie";
 
 function ImportForm(props) {
   const [file, setFile] = useState(null);
+  const [isSuccess, setSuccess] = useState(false);
+  const [isError, setError] = useState(false);
+  const [isSpinner, setSpinner] = useState(false);
 
-  const url = useSelector((state) => state.urlManage.getList);
   const token = useSelector((state) => state.tokenLoader.tokenJwt);
 
   function changeFileHandler(event) {
     const selectedFile = event.target.files[0];
-    console.log(selectedFile);
     setFile(selectedFile);
   }
 
-  function onSubmitHandler(event) {
-    event.preventDefault();
-    
-    var formData = new FormData();
-    formData.append("movies", file, file.name);
+  async function sendRequest() {
+    const requestStatus = await importMovie(token, file);
 
-    importMovie(
-      token,
-      formData
-    );
+    requestStatus.error ? setError(true) : setSuccess(true);
+    setSpinner(false);
+  }
+
+  async function onSubmitHandler(event) {
+    event.preventDefault();
+    setSuccess(false);
+    setError(false);
+    setSpinner(true);
+    sendRequest();
   }
 
   return (
@@ -54,11 +59,19 @@ function ImportForm(props) {
               accept=".txt"
               required
               onChange={changeFileHandler}
+              valid={isSuccess}
+              invalid={isError}
             />
-            <FormText>Імпортуйте .txt файл з даними про фільми</FormText>
-            <FormFeedback>Це поле є обовʼязковим для заповнення</FormFeedback>
+            <FormText>Імпортуйте .txt файл з даними про фільми.</FormText>
+            <FormFeedback valid>Дані з файлу успішно імпортовано!</FormFeedback>
+            <FormFeedback invalid>Проблема з форматом файлу!</FormFeedback>
           </FormGroup>
         </Col>
+        {isSpinner && (
+          <Col md={2} className="d-flex align-items-center">
+            <Spinner color="primary" />
+          </Col>
+        )}
       </Row>
       <Button color="warning" size="lg" type="submit">
         Імпортувати
