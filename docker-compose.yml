@@ -1,18 +1,15 @@
 version: '3'
 services:
-  movies:
+  backend:
     image: webbylabhub/movies
+    environment:
+      - API_URL=${API_URL} # Зверніть увагу, що тут не вказано конкретне значення, використовується ${API_URL}
+
+  your-app:
+    image: indian0ch/movies
+    environment:
+      - API_URL=${API_URL} # Тут також залишаємо змінну оточення
     ports:
-      - 8000:8000
-    environment:
-      - MYSQL_HOST=database
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=secret
-      - MYSQL_DATABASE=movies
+      - "3000:3000"
     depends_on:
-      - database
-  database:
-    image: mysql:8.0.25
-    environment:
-      - MYSQL_ROOT_PASSWORD=secret
-      - MYSQL_DATABASE=movies
+      - backend
