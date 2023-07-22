@@ -6,6 +6,7 @@ const initialState = {
   getList: "http://localhost:8000/api/v1/movies?limit=5",
   getSortList:
     "http://localhost:8000/api/v1/movies?sort=title&order=DESC&limit=5",
+  import:"http://localhost:8000/api/v1/movies/import",
 };
 
 const urlSlice = createSlice({

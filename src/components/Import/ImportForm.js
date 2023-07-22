@@ -52,13 +52,18 @@ function ImportForm(props) {
   });
 
   const token = useSelector((state) => state.tokenLoader.tokenJwt);
+  const urlImport = useSelector((state) => state.urlManage.import);
 
   function changeFileHandler(event) {
     dispatchInfo({ type: "change_file", file: event.target.files[0] });
   }
 
   async function sendRequest() {
-    const requestStatus = await importMovie(token, formImportState.file);
+    const requestStatus = await importMovie(
+      urlImport,
+      token,
+      formImportState.file
+    );
 
     requestStatus.error
       ? dispatchInfo({ type: "change_status_error", status: true })

@@ -1,4 +1,4 @@
-export async function importMovie(token, file) {
+export async function importMovie(url, token, file) {
   var myHeaders = new Headers();
   myHeaders.append("Authorization", `${token}`);
 
@@ -11,10 +11,7 @@ export async function importMovie(token, file) {
     body: formData,
   };
 
-  return await fetch(
-    "http://localhost:8000/api/v1/movies/import",
-    requestOptions
-  )
+  return await fetch(url, requestOptions)
     .then((response) => {
       return response.json();
     })
