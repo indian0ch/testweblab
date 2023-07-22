@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useReducer } from "react";
 import {
   FormGroup,
   Form,
@@ -14,31 +14,65 @@ import {
 import { useSelector } from "react-redux";
 import { importMovie } from "./importMovie";
 
+function formImportReducer(state, action) {
+  switch (action.type) {
+    case "change_file": {
+      return {
+        ...state,
+        file: action.file,
+      };
+    }
+    case "change_status_success": {
+      return {
+        ...state,
+        isSuccess: action.status,
+      };
+    }
+    case "change_status_error": {
+      return {
+        ...state,
+        isError: action.status,
+      };
+    }
+    case "change_status_spinner": {
+      return {
+        ...state,
+        isSpinner: action.status,
+      };
+    }
+  }
+}
+
 function ImportForm(props) {
-  const [file, setFile] = useState(null);
-  const [isSuccess, setSuccess] = useState(false);
-  const [isError, setError] = useState(false);
-  const [isSpinner, setSpinner] = useState(false);
+  const [formImportState, dispatchInfo] = useReducer(formImportReducer, {
+    file: null,
+    isSuccess: false,
+    isError: false,
+    isSpinner: false,
+  });
 
   const token = useSelector((state) => state.tokenLoader.tokenJwt);
 
   function changeFileHandler(event) {
-    const selectedFile = event.target.files[0];
-    setFile(selectedFile);
+    dispatchInfo({ type: "change_file", file: event.target.files[0] });
   }
 
   async function sendRequest() {
-    const requestStatus = await importMovie(token, file);
+    const requestStatus = await importMovie(token, formImportState.file);
 
-    requestStatus.error ? setError(true) : setSuccess(true);
-    setSpinner(false);
+    requestStatus.error
+      ? dispatchInfo({ type: "change_status_error", status: true })
+      : dispatchInfo({ type: "change_status_success", status: true });
+
+    dispatchInfo({ type: "change_status_spinner", status: false });
   }
 
   async function onSubmitHandler(event) {
     event.preventDefault();
-    setSuccess(false);
-    setError(false);
-    setSpinner(true);
+    dispatchInfo({ type: "change_status_success", status: false });
+    dispatchInfo({ type: "change_status_error", status: false });
+    dispatchInfo({ type: "change_status_spinner", status: true });
+
     sendRequest();
   }
 
@@ -59,15 +93,15 @@ function ImportForm(props) {
               accept=".txt"
               required
               onChange={changeFileHandler}
-              valid={isSuccess}
-              invalid={isError}
+              valid={formImportState.isSuccess}
+              invalid={formImportState.isError}
             />
             <FormText>Імпортуйте .txt файл з даними про фільми.</FormText>
             <FormFeedback valid>Дані з файлу успішно імпортовано!</FormFeedback>
             <FormFeedback invalid>Проблема з форматом файлу!</FormFeedback>
           </FormGroup>
         </Col>
-        {isSpinner && (
+        {formImportState.isSpinner && (
           <Col md={2} className="d-flex align-items-center">
             <Spinner color="primary" />
           </Col>
