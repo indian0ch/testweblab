@@ -17,6 +17,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
+
     children: [
       {
         index: "/catalog",
@@ -77,10 +78,12 @@ function App() {
       .then((response) => response.json())
       .then((data) => {
         const token = data.token;
-        dispatch(tokenLoaderActions.setToken(token)); // Dispatch the action to update the token in the store
+        dispatch(tokenLoaderActions.setToken(token)); 
       })
-      .catch((error) => {
-        console.error("Error:", error);
+      .catch(() => {
+        alert(
+          "Помилка під час загрузки токену для доступу до бекенд частини програми"
+        );
       });
   }, []);
 

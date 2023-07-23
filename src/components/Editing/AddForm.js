@@ -10,6 +10,7 @@ import {
   Col,
   Button,
   Spinner,
+  Alert,
 } from "reactstrap";
 import { postFilm } from "./postFilm";
 import { validateActors } from "./validateActors";
@@ -48,7 +49,7 @@ function AddForm(props) {
   const formatRef = useRef();
   const actorsRef = useRef();
   const [isLoadingBtn, setIsLoadingBtn] = useState(false);
-  const [actorsArr, setActorsArr] = useState([]);
+  const [isSuccess, setSuccess] = useState(true);
 
   const url = useSelector((state) => state.urlManage.addUrl);
   const token = useSelector((state) => state.tokenLoader.tokenJwt);
@@ -73,6 +74,29 @@ function AddForm(props) {
     return validateStatus;
   }
 
+  function cleanInput() {
+    setSuccess(true);
+    setTimeout(() => {
+      setSuccess(null);
+    }, 2000);
+
+    titleRef.current.value = "";
+    yearRef.current.value = "";
+    actorsRef.current.value = "";
+  }
+
+  async function getResponse(actorArr) {
+    const response = await postFilm(url, token, {
+      title: titleRef.current.value,
+      year: yearRef.current.value,
+      format: formatRef.current.value,
+      actors: actorArr,
+    });
+    if (response.ok) {
+      return true;
+    }
+  }
+
   function onSubmitHandler(event) {
     event.preventDefault();
 
@@ -82,17 +106,16 @@ function AddForm(props) {
     setIsLoadingBtn(true);
 
     if (checkValidation()) {
-      const validatedArr = validateActors(actorsRef.current.value);
-      if (validatedArr) {
-        // setActorsArr(validatedArr);
-        postFilm(url, token, {
-          title: titleRef.current.value,
-          year: yearRef.current.value,
-          format: formatRef.current.value,
-          actors: validatedArr,
-        });
+      const validatedActorArr = validateActors(actorsRef.current.value);
+      if (validatedActorArr) {
+        if (getResponse(validatedActorArr)) {
+          cleanInput();
+        } else {
+          setSuccess(false);
+        }
       }
-
+    } else {
+      setSuccess(false);
     }
   }
 
@@ -157,11 +180,13 @@ function AddForm(props) {
           name="actorsText"
           type="textarea"
           placeholder="Andrii Fesiuk, Max Scherbachuk"
-          invalid={filmInfoState.isTitleValid}
+          invalid={filmInfoState.isActorValid}
           onClick={() => clickInputHandler("change_actor_status")}
         />
+        <FormFeedback invalid>
+          Це поле є обовʼязковим для заповнення
+        </FormFeedback>
       </FormGroup>
-      <FormFeedback invalid>Це поле є обовʼязковим для заповнення</FormFeedback>
       <FormFeedback valid>Правильно!</FormFeedback>
       <Button color="primary" size="lg" type="submit">
         {isLoadingBtn === true ? (
@@ -170,6 +195,16 @@ function AddForm(props) {
           "Додати фільм"
         )}
       </Button>
+      {isSuccess && (
+        <Alert color="success" className="col-md-12 col-sm my-3">
+          Фільм успішно додано
+        </Alert>
+      )}
+      {isSuccess === false ? (
+        <Alert color="danger" className="col-md-12 col-sm my-3">
+          Помилка надсилання
+        </Alert>
+      ) : null}
     </Form>
   );
 }
