@@ -15,7 +15,7 @@ function reducerPagination(state, action) {
     case "next_click": {
       return {
         isPrevActive: true,
-        pageLink: state.pageLink++,
+        pageLink: state.pageLink + 1,
         isNextActive: action.status,
       };
     }
@@ -23,13 +23,13 @@ function reducerPagination(state, action) {
       if (state.pageLink === 1) {
         return {
           isPrevActive: false,
-          pageLink: state.pageLink--,
+          pageLink: state.pageLink - 1,
           isNextActive: true,
         };
       }
       return {
         ...state,
-        pageLink: state.pageLink--,
+        pageLink: state.pageLink - 1,
         isNextActive: true,
       };
     }
@@ -70,6 +70,10 @@ function Pagination(props) {
     });
   }, [nextAvailability]);
 
+  useEffect(() => {
+    navigate(`/${statePagination.pageLink}`);
+  }, [statePagination.pageLink]);
+
   return (
     <nav className="d-flex justify-content-center">
       <ul className="pagination">
@@ -82,7 +86,6 @@ function Pagination(props) {
             className="page-link"
             onClick={() => {
               dispatchPagination({ type: "previous_click" });
-              navigate(`/${statePagination.pageLink - 1}`);
             }}
           >
             Previous
@@ -105,7 +108,6 @@ function Pagination(props) {
                 type: "next_click",
                 status: nextAvailability,
               });
-              navigate(`/${statePagination.pageLink + 1}`);
             }}
           >
             Next
