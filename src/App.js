@@ -62,7 +62,9 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/v1/sessions", {
+    console.log("API_URL:", process.env.REACT_APP_API_URL);
+
+    fetch(`${process.env.REACT_APP_API_URL}/sessions`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json; charset=utf-8",

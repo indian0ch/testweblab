@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  deleteUrl: "http://localhost:8000/api/v1/movies/",
-  addUrl: "http://localhost:8000/api/v1/movies",
-  getList: "http://localhost:8000/api/v1/movies?limit=5",
+  deleteUrl: `${process.env.REACT_APP_API_URL}/movies/`,
+  addUrl: `${process.env.REACT_APP_API_URL}/movies`,
+  getList: `${process.env.REACT_APP_API_URL}/movies?limit=5`,
   getSortList:
-    "http://localhost:8000/api/v1/movies?sort=title&order=DESC&limit=5",
-  import:"http://localhost:8000/api/v1/movies/import",
+  `${process.env.REACT_APP_API_URL}/movies?sort=title&order=DESC&limit=5`,
+  import:`${process.env.REACT_APP_API_URL}/movies/import`,
 };
 
 const urlSlice = createSlice({

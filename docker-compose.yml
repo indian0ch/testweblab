@@ -3,13 +3,16 @@ services:
   backend:
     image: webbylabhub/movies
     environment:
-      - API_URL=${API_URL} # Зверніть увагу, що тут не вказано конкретне значення, використовується ${API_URL}
+      - API_URL=${API_URL}
+    ports:
+      - "80:80"
 
-  your-app:
-    image: indian0ch/movies
+  testweblab:
+    build:
+      context: .
+      dockerfile: Dockerfile
     environment:
-      - API_URL=${API_URL} # Тут також залишаємо змінну оточення
+      - API_URL=${API_URL}
     ports:
       - "3000:3000"
-    depends_on:
-      - backend
+
