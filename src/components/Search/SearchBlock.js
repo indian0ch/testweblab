@@ -17,7 +17,7 @@ function SearchBlock(props) {
 
   async function fetchMovie(value, type, emptyState, movieState) {
     if (value) {
-      const url = `http://localhost:8000/api/v1/movies?limit=1`;
+      const url = `${process.env.REACT_APP_API_URL}/movies?limit=1`;
       let movie;
       if (type === "title") {
         movie = await getMovies({
