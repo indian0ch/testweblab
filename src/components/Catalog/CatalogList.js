@@ -65,6 +65,8 @@ function CatalogList(props) {
         <Spinner className="mx-auto" color="primary" size="">
           Loading...
         </Spinner>
+      ) : loadedRows.length === 0 ? (
+        <p>Фільми відсутні.</p>
       ) : (
         loadedRows
       )}
