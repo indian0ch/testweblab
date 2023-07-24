@@ -1,11 +1,15 @@
-import React from 'react';
+import React from "react";
+import ContainerWrapper from "../components/UI/ContainerWrapper";
 
 const ErrorPage = () => {
   return (
-    <div>
-      <h1>Error</h1>
-      <p>Sorry, something went wrong.</p>
-    </div>
+    <ContainerWrapper>
+      <h1>Помилка!</h1>
+      <p>
+        Перевірте правильність налаштування образу, який ми використовуємо в
+        якості сервера API.
+      </p>
+    </ContainerWrapper>
   );
 };
 
