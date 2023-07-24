@@ -35,6 +35,7 @@ function CatalogList(props) {
 
   useEffect(() => {
     setSpinnerActive(true);
+    dispatch(paginationCounterActions.setNextAvailable(false));
     const fetchMovies = async () => {
       let number = pageNumber;
       pageNumber === "catalog" && (number = 1);
