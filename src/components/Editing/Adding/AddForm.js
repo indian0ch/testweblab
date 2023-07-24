@@ -14,7 +14,7 @@ import {
 } from "reactstrap";
 import { postFilm } from "./postFilm";
 import { validateActors } from "./validateActors";
-import { ADD_URL } from "../../asserts/urlLinks";
+import { ADD_URL } from "../../../asserts/urlLinks";
 
 function filmInfoReducer(state, action) {
   switch (action.type) {

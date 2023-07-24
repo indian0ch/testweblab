@@ -12,7 +12,7 @@ import {
 } from "reactstrap";
 import { deleteFilm } from "./deleteFilm";
 import { useSelector } from "react-redux";
-import { DELETE_URL } from "../../asserts/urlLinks";
+import { DELETE_URL } from "../../../asserts/urlLinks";
 
 function DeleteForm(props) {
   const idRef = useRef();
