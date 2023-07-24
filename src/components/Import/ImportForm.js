@@ -13,6 +13,7 @@ import {
 } from "reactstrap";
 import { useSelector } from "react-redux";
 import { importMovie } from "./importMovie";
+import { IMPORT_URL } from "../storage/urlLinks";
 
 function formImportReducer(state, action) {
   switch (action.type) {
@@ -52,7 +53,6 @@ function ImportForm(props) {
   });
 
   const token = useSelector((state) => state.tokenLoader.tokenJwt);
-  const urlImport = useSelector((state) => state.urlManage.import);
 
   function changeFileHandler(event) {
     dispatchInfo({ type: "change_file", file: event.target.files[0] });
@@ -60,7 +60,7 @@ function ImportForm(props) {
 
   async function sendRequest() {
     const requestStatus = await importMovie(
-      urlImport,
+      IMPORT_URL,
       token,
       formImportState.file
     );

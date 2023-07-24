@@ -14,6 +14,7 @@ import {
 } from "reactstrap";
 import { postFilm } from "./postFilm";
 import { validateActors } from "./validateActors";
+import { ADD_URL } from "../storage/urlLinks";
 
 function filmInfoReducer(state, action) {
   switch (action.type) {
@@ -51,7 +52,6 @@ function AddForm(props) {
   const [isLoadingBtn, setIsLoadingBtn] = useState(false);
   const [isSuccess, setSuccess] = useState(null);
 
-  const url = useSelector((state) => state.urlManage.addUrl);
   const token = useSelector((state) => state.tokenLoader.tokenJwt);
 
   function clickInputHandler(typeString) {
@@ -86,7 +86,7 @@ function AddForm(props) {
   }
 
   async function getResponse(actorArr) {
-    const response = await postFilm(url, token, {
+    const response = await postFilm(ADD_URL, token, {
       title: titleRef.current.value,
       year: yearRef.current.value,
       format: formatRef.current.value,

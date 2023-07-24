@@ -2,18 +2,18 @@ import { useState, useEffect } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { getMovies } from "./getMovies";
 import { useSelector } from "react-redux";
+import { DELETE_URL } from "../storage/urlLinks";
 
 function ModalInfo(props) {
   const [movieData, setMovieData] = useState({});
   const [actorsList, setActorsList] = useState();
 
   const token = useSelector((state) => state.tokenLoader.tokenJwt);
-  const url = useSelector((state) => state.urlManage.deleteUrl);
 
   useEffect(() => {
     //Отримаємо інфо по конкретному фільмі
     const fetchMovie = async () => {
-      const infoMovie = await getMovies({url, token, id:props.id});
+      const infoMovie = await getMovies({ DELETE_URL, token, id: props.id });
       if (infoMovie) {
         setMovieData(infoMovie);
       }

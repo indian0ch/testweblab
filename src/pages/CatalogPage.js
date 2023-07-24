@@ -2,23 +2,21 @@ import ContainerWrapper from "../components/UI/ContainerWrapper";
 import Pagination from "../components/Catalog/Pagination";
 import { Outlet, useNavigate } from "react-router-dom";
 import { Input, Label } from "reactstrap";
-import { useSelector } from "react-redux";
 import { useState } from "react";
+import { SortLIST_URL, LIST_URL } from "../components/storage/urlLinks";
 
 function CatalogPage(props) {
   const navigate = useNavigate();
-  const urlUnsorted = useSelector((state) => state.urlManage.getList);
-  const urlSorted = useSelector((state) => state.urlManage.getSortList);
 
   const [isSortChecked, setSortChecked] = useState(false);
-  const [urlForLoad, setUrlForLoad] = useState(urlUnsorted);
+  const [urlForLoad, setUrlForLoad] = useState(LIST_URL);
 
   function onCheckHandler(event) {
     setSortChecked(!isSortChecked);
     if (isSortChecked === true) {
-      setUrlForLoad(urlUnsorted);
+      setUrlForLoad(LIST_URL);
     } else {
-      setUrlForLoad(urlSorted);
+      setUrlForLoad(SortLIST_URL);
     }
     navigate(`/1`);
   }

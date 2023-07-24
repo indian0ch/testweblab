@@ -12,6 +12,7 @@ import {
 } from "reactstrap";
 import { deleteFilm } from "./deleteFilm";
 import { useSelector } from "react-redux";
+import { DELETE_URL } from "../storage/urlLinks";
 
 function DeleteForm(props) {
   const idRef = useRef();
@@ -20,7 +21,6 @@ function DeleteForm(props) {
   const [successMessage, setSuccessMessage] = useState(false);
 
   const token = useSelector((state) => state.tokenLoader.tokenJwt);
-  const url = useSelector((state) => state.urlManage.deleteUrl);
 
   function chechValidation() {
     if (idRef.current.value === "") {
@@ -33,7 +33,7 @@ function DeleteForm(props) {
   async function onSubmitHandler(event) {
     event.preventDefault();
     if (chechValidation()) {
-      const isSuccess = await deleteFilm(url, token, idRef.current.value);
+      const isSuccess = await deleteFilm(DELETE_URL, token, idRef.current.value);
       if (isSuccess.error) {
         setErrorMessage(true);
       } else {
