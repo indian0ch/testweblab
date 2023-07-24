@@ -18,7 +18,7 @@ const SearchForm = React.forwardRef((props, ref) => {
           <FormGroup className="col-sm" floating>
             <Input
               id={props.id}
-              innerRef={ref} 
+              innerRef={ref}
               name={props.id}
               type={props.type}
               onClick={() => {

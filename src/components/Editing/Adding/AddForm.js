@@ -15,6 +15,7 @@ import {
 import { postFilm } from "./postFilm";
 import { validateActors } from "./validateActors";
 import { ADD_URL } from "../../../asserts/urlLinks";
+import FormGroupCustom from "../../UI/FormGroupCustom";
 
 function filmInfoReducer(state, action) {
   switch (action.type) {
@@ -129,38 +130,32 @@ function AddForm(props) {
     <Form onSubmit={onSubmitHandler} className=" col-12 mx-auto">
       <Row>
         <Col md={6}>
-          <FormGroup className="col-sm" floating>
-            <Input
-              id="filmTitle"
-              innerRef={titleRef}
-              name="filmTitle"
-              type="name"
-              invalid={filmInfoState.isTitleValid}
-              onClick={() => clickInputHandler("change_title_status")}
-            />
-            <Label for="contactName">Назва фільму</Label>
-            <FormFeedback invalid>
-              Це поле є обовʼязковим для заповнення
-            </FormFeedback>
-          </FormGroup>
+          <FormGroupCustom
+            className="col-sm"
+            name="filmTitle"
+            ref={titleRef}
+            type="name"
+            floating={true}
+            invalid={filmInfoState.isTitleValid}
+            onClick={() => clickInputHandler("change_title_status")}
+          >
+            Назва фільму
+          </FormGroupCustom>
         </Col>
         <Col md={6}>
-          <FormGroup className="col-sm" floating>
-            <Input
-              id="filmYear"
-              innerRef={yearRef}
-              name="filmYear"
-              type="number"
-              max="2021"
-              min="1800"
-              invalid={filmInfoState.isYearValid}
-              onClick={() => clickInputHandler("change_year_status")}
-            />
-            <Label for="contactEmail">Рік випуску</Label>
-            <FormFeedback invalid>
-              Це поле є обовʼязковим для заповнення
-            </FormFeedback>
-          </FormGroup>
+          <FormGroupCustom
+            className="col-sm"
+            name="filmYear"
+            ref={yearRef}
+            type="number"
+            floating={true}
+            invalid={filmInfoState.isYearValid}
+            onClick={() => clickInputHandler("change_year_status")}
+            max="2021"
+            min="1800"
+          >
+            Рік випуску
+          </FormGroupCustom>
         </Col>
       </Row>
       <FormGroup floating>
@@ -176,23 +171,18 @@ function AddForm(props) {
         </Input>
         <Label for="contactPhone">Формат</Label>
       </FormGroup>
-      <FormGroup>
-        <Label for="exampleText">
-          Список акторів (У форматі: Ім'я та Прізвище актора через кому)
-        </Label>
-        <Input
-          id="actorsText"
-          innerRef={actorsRef}
-          name="actorsText"
-          type="textarea"
-          placeholder="Andrii Fesiuk, Max Scherbachuk"
-          invalid={filmInfoState.isActorValid}
-          onClick={() => clickInputHandler("change_actor_status")}
-        />
-        <FormFeedback invalid>
-          Це поле є обовʼязковим для заповнення
-        </FormFeedback>
-      </FormGroup>
+      <FormGroupCustom
+        name="actorsText"
+        ref={actorsRef}
+        type="textarea"
+        placeholder="Andrii Fesiuk, Max Scherbachuk"
+        floating={false}
+        invalid={filmInfoState.isActorValid}
+        onClick={() => clickInputHandler("change_actor_status")}
+      >
+        Список акторів (У форматі: Ім'я та Прізвище актора через кому)
+      </FormGroupCustom>
+
       <FormFeedback valid>Правильно!</FormFeedback>
       <Button color="primary" size="lg" type="submit">
         {isLoadingBtn === true ? (

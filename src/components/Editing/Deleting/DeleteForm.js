@@ -1,18 +1,9 @@
 import { useRef, useState } from "react";
-import {
-  FormGroup,
-  Form,
-  Label,
-  Input,
-  FormFeedback,
-  Row,
-  Col,
-  Button,
-  Alert,
-} from "reactstrap";
+import { Form, Row, Col, Button, Alert } from "reactstrap";
 import { deleteFilm } from "./deleteFilm";
 import { useSelector } from "react-redux";
 import { DELETE_URL } from "../../../asserts/urlLinks";
+import FormGroupCustom from "../../UI/FormGroupCustom";
 
 function DeleteForm(props) {
   const idRef = useRef();
@@ -33,7 +24,11 @@ function DeleteForm(props) {
   async function onSubmitHandler(event) {
     event.preventDefault();
     if (chechValidation()) {
-      const isSuccess = await deleteFilm(DELETE_URL, token, idRef.current.value);
+      const isSuccess = await deleteFilm(
+        DELETE_URL,
+        token,
+        idRef.current.value
+      );
       if (isSuccess.error) {
         setErrorMessage(true);
       } else {
@@ -46,24 +41,21 @@ function DeleteForm(props) {
     <Form onSubmit={onSubmitHandler} className=" col-12 mx-auto">
       <Row>
         <Col md={12}>
-          <FormGroup className="col-sm" floating>
-            <Input
-              id="filmID"
-              innerRef={idRef}
-              name="filmID"
-              type="number"
-              onClick={() => {
-                setErrorMessage(false);
-                setSuccessMessage(false);
-                setIdEmpty(false);
-              }}
-              invalid={isIdEmpty}
-            />
-            <Label for="contactName">Унікальний ідентифікатор фільму</Label>
-            <FormFeedback invalid>
-              Це поле є обовʼязковим для заповнення
-            </FormFeedback>
-          </FormGroup>
+          <FormGroupCustom
+            floating={true}
+            class="col-sm"
+            name="filmID"
+            type="number"
+            ref={idRef}
+            invalid={isIdEmpty}
+            onClick={() => {
+              setErrorMessage(false);
+              setSuccessMessage(false);
+              setIdEmpty(false);
+            }}
+          >
+            Унікальний ідентифікатор фільму
+          </FormGroupCustom>
         </Col>
       </Row>
       <Button color="warning" size="lg" type="submit">
