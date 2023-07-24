@@ -18,6 +18,7 @@ function HeaderMenu(props) {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
+  console.log();
 
   return (
     <Navbar {...props}>
@@ -27,11 +28,22 @@ function HeaderMenu(props) {
       <Collapse isOpen={isOpen} navbar>
         <Nav className="me-auto" navbar>
           <NavItem className={classes.navItem}>
-            <NavLink className={classes.link} to="/catalog" onClick={toggle}>
+            <NavLink
+              className={classes.link}
+              to="/catalog"
+              onClick={isOpen && toggle}
+            >
               Каталог
             </NavLink>
           </NavItem>
-          <NavItem className={classes.navItem} onClick={toggle}>
+          <NavItem
+            className={classes.navItem}
+            onClick={() => {
+              if (isOpen) {
+                toggle();
+              }
+            }}
+          >
             <NavLink className={classes.link} to="/search">
               Пошук
             </NavLink>
@@ -44,7 +56,11 @@ function HeaderMenu(props) {
               <DropdownItem>
                 {" "}
                 <NavItem>
-                  <Link className={classes.link} to="/editing/add" onClick={toggle}>
+                  <Link
+                    className={classes.link}
+                    to="/editing/add"
+                    onClick={isOpen && toggle}
+                  >
                     Додати фільм
                   </Link>
                 </NavItem>
@@ -52,7 +68,11 @@ function HeaderMenu(props) {
               <DropdownItem>
                 {" "}
                 <NavItem>
-                  <Link className={classes.link} to="/editing/delete" onClick={toggle}>
+                  <Link
+                    className={classes.link}
+                    to="/editing/delete"
+                    onClick={isOpen && toggle}
+                  >
                     Видалити фільм
                   </Link>
                 </NavItem>
@@ -61,7 +81,11 @@ function HeaderMenu(props) {
               <DropdownItem>
                 {" "}
                 <NavItem>
-                  <Link className={classes.link} to="/import" onClick={toggle}>
+                  <Link
+                    className={classes.link}
+                    to="/import"
+                    onClick={isOpen && toggle}
+                  >
                     Імпорт
                   </Link>
                 </NavItem>
