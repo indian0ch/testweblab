@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import SearchForm from "./SearchForm";
 import { getMovies } from "../Catalog/getMovies";
 import { useSelector } from "react-redux";
@@ -32,7 +32,7 @@ function SearchBlock(props) {
           actor: value,
         });
       }
-      movie ? movieState(...movie) : movieState(false);
+      movie.length === 0 ? movieState(false) : movieState(...movie);
     } else {
       emptyState(true);
     }
@@ -47,6 +47,21 @@ function SearchBlock(props) {
     event.preventDefault();
     fetchMovie(actorRef.current.value, "actor", setActorEmpty, setActorFilm);
   }
+
+  useEffect(() => {
+    let searchTimer = setTimeout(() => {
+      if (titleFilm === false) {
+        setTitleFilm(null);
+      }
+      if (actorFilm === false) {
+        setActorFilm(null);
+      }
+    }, 2000);
+
+    return () => {
+      clearTimeout(searchTimer);
+    };
+  }, [titleFilm, actorFilm]);
 
   return (
     <div className="my-2">
