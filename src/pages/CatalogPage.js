@@ -3,7 +3,7 @@ import Pagination from "../components/Catalog/Pagination";
 import { Outlet, useNavigate } from "react-router-dom";
 import { Input, Label } from "reactstrap";
 import { useState } from "react";
-import { SortLIST_URL, LIST_URL } from "../components/storage/urlLinks";
+import { SortLIST_URL, LIST_URL } from "./../asserts/urlLinks";
 
 function CatalogPage(props) {
   const navigate = useNavigate();

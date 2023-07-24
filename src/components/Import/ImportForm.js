@@ -13,7 +13,7 @@ import {
 } from "reactstrap";
 import { useSelector } from "react-redux";
 import { importMovie } from "./importMovie";
-import { IMPORT_URL } from "../storage/urlLinks";
+import { IMPORT_URL } from "../../asserts/urlLinks";
 
 function formImportReducer(state, action) {
   switch (action.type) {

@@ -5,7 +5,7 @@ import MovieRow from "./MovieRow";
 import { getMovies } from "./getMovies";
 import { useEffect, useState } from "react";
 import classes from "./Catalog.module.css";
-import { paginationCounterActions } from "../storage/paginationSlice";
+import { paginationCounterActions } from "../../storage/paginationSlice";
 
 function adjustPagination(moviesData, token) {
   const moviesComponentArr = [];
@@ -22,7 +22,7 @@ function adjustPagination(moviesData, token) {
   }
   return [moviesComponentArr, counterItems];
 }
-
+//Component
 function CatalogList(props) {
   const dispatch = useDispatch();
   const { pageNumber } = useParams();
@@ -66,7 +66,7 @@ function CatalogList(props) {
           Loading...
         </Spinner>
       ) : loadedRows.length === 0 ? (
-        <p className="">Фільми відсутні.</p>
+        <p>Фільми відсутні.</p>
       ) : (
         loadedRows
       )}

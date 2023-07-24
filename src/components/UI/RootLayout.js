@@ -2,7 +2,7 @@ import HeaderMenu from "../Header/HeaderMenu";
 import HeaderDescription from "../Header/HeaderDescription";
 import { Fragment, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
-import { tokenLoaderActions } from "../storage/tokenSlice";
+import { tokenLoaderActions } from "../../storage/tokenSlice";
 import { useDispatch } from "react-redux";
 import ErrorPage from "../../pages/ErrorPage";
 
