@@ -51,6 +51,7 @@ function AddForm(props) {
   const actorsRef = useRef();
   const [isLoadingBtn, setIsLoadingBtn] = useState(false);
   const [isSuccess, setSuccess] = useState(null);
+  const [isAlreadyExist, setAlreadyExist] = useState(null);
 
   const token = useSelector((state) => state.tokenLoader.tokenJwt);
 
@@ -92,7 +93,15 @@ function AddForm(props) {
       format: formatRef.current.value,
       actors: actorArr,
     });
-    if (response.ok) {
+
+    if (response.status === 0) {
+      (response.error.code === "NOT_UNIQUE" ||
+        response.error.code === "MOVIE_EXISTS") &&
+        setAlreadyExist(true);
+      setSuccess(false);
+      return false;
+    } else {
+      cleanInput();
       return true;
     }
   }
@@ -100,6 +109,7 @@ function AddForm(props) {
   function onSubmitHandler(event) {
     event.preventDefault();
 
+    setAlreadyExist(false);
     setTimeout(() => {
       setIsLoadingBtn(false);
     }, 1000);
@@ -108,11 +118,7 @@ function AddForm(props) {
     if (checkValidation()) {
       const validatedActorArr = validateActors(actorsRef.current.value);
       if (validatedActorArr) {
-        if (getResponse(validatedActorArr)) {
-          cleanInput();
-        } else {
-          setSuccess(false);
-        }
+        getResponse(validatedActorArr);
       }
     } else {
       setSuccess(false);
@@ -145,7 +151,7 @@ function AddForm(props) {
               innerRef={yearRef}
               name="filmYear"
               type="number"
-              max="2023"
+              max="2021"
               min="1800"
               invalid={filmInfoState.isYearValid}
               onClick={() => clickInputHandler("change_year_status")}
@@ -200,6 +206,11 @@ function AddForm(props) {
           Фільм успішно додано
         </Alert>
       )}
+      {isAlreadyExist === true ? (
+        <Alert color="danger" className="col-md-12 col-sm my-3">
+          Фільм з такою назвою вже існує
+        </Alert>
+      ) : null}
       {isSuccess === false ? (
         <Alert color="danger" className="col-md-12 col-sm my-3">
           Помилка надсилання...
