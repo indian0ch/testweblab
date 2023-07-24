@@ -66,7 +66,7 @@ function CatalogList(props) {
           Loading...
         </Spinner>
       ) : loadedRows.length === 0 ? (
-        <p>Фільми відсутні.</p>
+        <p className="">Фільми відсутні.</p>
       ) : (
         loadedRows
       )}
