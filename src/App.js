@@ -1,6 +1,10 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  useNavigate,
+} from "react-router-dom";
 import RootLayout from "./components/UI/RootLayout";
 import EditPage from "./pages/EditPage";
 import ImportPage from "./pages/ImportPage";
@@ -8,16 +12,18 @@ import CatalogPage from "./pages/CatalogPage";
 import DeleteForm from "./components/Editing/DeleteForm";
 import AddForm from "./components/Editing/AddForm";
 import CatalogList from "./components/Catalog/CatalogList";
+import SearchPage from "./pages/SeachPage";
+import ErrorPage from "./pages/ErrorPage";
 import { tokenLoaderActions } from "./components/storage/tokenSlice";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import SearchPage from "./pages/SeachPage";
+import { ErrorResponse } from "@remix-run/router";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
-
+    errorElement: <ErrorPage />,
     children: [
       {
         index: "/catalog",
@@ -79,7 +85,7 @@ function App() {
       .then((response) => response.json())
       .then((data) => {
         const token = data.token;
-        dispatch(tokenLoaderActions.setToken(token)); 
+        dispatch(tokenLoaderActions.setToken(token));
       })
       .catch(() => {
         console.log(

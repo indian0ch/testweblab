@@ -32,7 +32,9 @@ function SearchBlock(props) {
           actor: value,
         });
       }
-      movie.length === 0 ? movieState(false) : movieState(...movie);
+      if(movie){
+        movie.length === 0 ? movieState(false) : movieState(...movie);
+      }
     } else {
       emptyState(true);
     }
