@@ -49,7 +49,7 @@ function AddForm(props) {
   const formatRef = useRef();
   const actorsRef = useRef();
   const [isLoadingBtn, setIsLoadingBtn] = useState(false);
-  const [isSuccess, setSuccess] = useState(true);
+  const [isSuccess, setSuccess] = useState(null);
 
   const url = useSelector((state) => state.urlManage.addUrl);
   const token = useSelector((state) => state.tokenLoader.tokenJwt);
@@ -202,7 +202,7 @@ function AddForm(props) {
       )}
       {isSuccess === false ? (
         <Alert color="danger" className="col-md-12 col-sm my-3">
-          Помилка надсилання
+          Помилка надсилання...
         </Alert>
       ) : null}
     </Form>

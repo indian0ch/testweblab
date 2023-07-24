@@ -2,16 +2,16 @@ import logo from "./logo.svg";
 import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RootLayout from "./components/UI/RootLayout";
-import EditPage from "./components/Editing/EditPage";
-import ImportPage from "./components/Import/ImportPage";
-import CatalogPage from "./components/Catalog/CatalogPage";
+import EditPage from "./pages/EditPage";
+import ImportPage from "./pages/ImportPage";
+import CatalogPage from "./pages/CatalogPage";
 import DeleteForm from "./components/Editing/DeleteForm";
 import AddForm from "./components/Editing/AddForm";
 import CatalogList from "./components/Catalog/CatalogList";
 import { tokenLoaderActions } from "./components/storage/tokenSlice";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import SearchPage from "./components/Search/SeachPage";
+import SearchPage from "./pages/SeachPage";
 
 const router = createBrowserRouter([
   {
@@ -64,6 +64,7 @@ function App() {
 
   useEffect(() => {
     console.log("API_URL:", process.env.REACT_APP_API_URL);
+    console.log("API_URL:", process.env.API_URL);
 
     fetch(`${process.env.REACT_APP_API_URL}/sessions`, {
       method: "POST",
@@ -81,7 +82,7 @@ function App() {
         dispatch(tokenLoaderActions.setToken(token)); 
       })
       .catch(() => {
-        alert(
+        console.log(
           "Помилка під час загрузки токену для доступу до бекенд частини програми"
         );
       });
