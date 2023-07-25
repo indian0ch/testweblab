@@ -1,11 +1,12 @@
 import classes from "./Authorization.module.css";
-import { Form, Button } from "reactstrap";
-import { Fragment, useRef, useReducer } from "react";
+import { Form, Button, Alert } from "reactstrap";
+import { Fragment, useRef, useReducer, useState } from "react";
 import FormGroupCustom from "../UI/FormGroupCustom";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { USER_URL } from "../../asserts/urlLinks";
+import { SESSION_URL } from "../../asserts/urlLinks";
 import { fetchUser } from "./fetchUser";
+import { tokenLoaderActions } from "../../storage/tokenSlice";
 
 function loginReducer(state, action) {
   switch (action.type) {
@@ -26,6 +27,7 @@ function loginReducer(state, action) {
 
 function LoginForm(props) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [loginState, dispatchLogin] = useReducer(loginReducer, {
     isEmailInvalid: null,
     isPasswordInvalid: null,
@@ -33,6 +35,7 @@ function LoginForm(props) {
 
   const emailRef = useRef();
   const passwordRef = useRef();
+  const [isSuccess, setSuccess] = useState(null);
 
   function checkValidation() {
     let validateStatus = true;
@@ -49,26 +52,33 @@ function LoginForm(props) {
     return validateStatus;
   }
 
-  async function getResponse(actorArr) {
-    const response = await fetchUser(USER_URL, "createUser", {
+  async function getResponse() {
+    const response = await fetchUser(SESSION_URL, {
       email: emailRef.current.value,
       password: passwordRef.current.value,
     });
 
-    // if (response.status === 0) {
-    //   (response.error.code === "NOT_UNIQUE" ||
-    //     response.error.code === "MOVIE_EXISTS") &&
-    //     setAlreadyExist(true);
-    //   setSuccess(false);
-    //   return false;
-    // } else {
-    //   cleanInput();
-    //   return true;
-    // }
+    if (response === "ServerError") {
+      props.onResponseFail(false);
+    } else {
+      if (response.status === 0) {
+        setSuccess(false);
+      } else {
+        setSuccess(true);
+        props.onResponseFail(true);
+        setTimeout(() => {
+          dispatch(tokenLoaderActions.setToken(response.token));
+          navigate("/1");
+        }, 1000);
+      }
+    }
   }
 
   function onLoginHandler() {
+    setSuccess(null);
+    props.onResponseFail(true);
     if (checkValidation()) {
+      getResponse();
     }
   }
 
@@ -77,7 +87,6 @@ function LoginForm(props) {
       <div className={classes.captionForm}>
         <span onClick={props.onChangeForm}>Реєстрація</span>
         <h4>Вхід</h4>
-        <button>х</button>
       </div>
       <Form className={classes.formContainer}>
         <FormGroupCustom
@@ -104,10 +113,26 @@ function LoginForm(props) {
         >
           Password
         </FormGroupCustom>
-        <Button className="" onClick={onLoginHandler} color="primary" outline size="lg">
+        <Button
+          className=""
+          onClick={onLoginHandler}
+          color="primary"
+          outline
+          size="lg"
+        >
           Увійти
         </Button>
       </Form>
+      {isSuccess && (
+        <Alert color="success" className="col-md-12 col-sm my-3">
+          Вхід успішно виконано
+        </Alert>
+      )}
+      {isSuccess === false ? (
+        <Alert color="danger" className="col-md-12 col-sm my-3">
+          Неправильний email або пароль...
+        </Alert>
+      ) : null}
     </Fragment>
   );
 }
