@@ -121,7 +121,6 @@ function RegisterForm(props) {
   return (
     <Fragment>
       <div className={classes.captionForm}>
-        <span onClick={props.onChangeForm}>Вхід</span>
         <h4>Реєстрація</h4>
       </div>
       <Form className={classes.formContainer}>
@@ -173,15 +172,18 @@ function RegisterForm(props) {
         >
           Підтвердження паролю
         </FormGroupCustom>
-        <Button
-          className=""
-          onClick={onRegisterHandler}
-          color="primary"
-          outline
-          size="lg"
-        >
-          Зареєструватися
-        </Button>
+        <div className={classes.navForm}>
+          <Button
+            className=""
+            onClick={onRegisterHandler}
+            color="primary"
+            outline
+            size="lg"
+          >
+            Зареєструватися
+          </Button>
+          <span onClick={props.onChangeForm}>Вхід</span>
+        </div>
       </Form>
       {isSuccess && (
         <Alert color="success" className="col-md-12 col-sm my-3">

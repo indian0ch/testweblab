@@ -86,7 +86,6 @@ function LoginForm(props) {
   return (
     <Fragment>
       <div className={classes.captionForm}>
-        <span onClick={props.onChangeForm}>Реєстрація</span>
         <h4>Вхід</h4>
       </div>
       <Form className={classes.formContainer}>
@@ -114,15 +113,18 @@ function LoginForm(props) {
         >
           Password
         </FormGroupCustom>
-        <Button
-          className=""
-          onClick={onLoginHandler}
-          color="primary"
-          outline
-          size="lg"
-        >
-          Увійти
-        </Button>
+        <div className={classes.navForm}>
+          <Button
+            className=""
+            onClick={onLoginHandler}
+            color="primary"
+            outline
+            size="lg"
+          >
+            Увійти
+          </Button>
+          <span onClick={props.onChangeForm}>Реєстрація</span>
+        </div>
       </Form>
       {isSuccess && (
         <Alert color="success" className="col-md-12 col-sm my-3">

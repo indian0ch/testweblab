@@ -9,7 +9,6 @@ import { tokenLoaderActions } from "../storage/tokenSlice";
 function AuthorizationPage(props) {
   const dispatch=useDispatch();
   const [isLoginOpen, setLoginOpen] = useState(true);
-  // const [isLoginIn, setLoginIn] = useState(true);
   const [isResponseOk, setResponseOk] = useState(null);
 
   function onChangeFormHandler() {
@@ -26,7 +25,7 @@ function AuthorizationPage(props) {
 
   return (
     <ContainerWrapper>
-      <h2 className="text-center">Вікно авторизації у системі</h2>
+      <h2 className="text-center my-5">Вікно авторизації у системі</h2>
       {isLoginOpen === true ? (
         <LoginForm
           onChangeForm={onChangeFormHandler}
