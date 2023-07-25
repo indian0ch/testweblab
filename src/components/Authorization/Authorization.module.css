@@ -1,15 +1,22 @@
 .captionForm{
     display: flex;
-    justify-content:space-between;
+    /* justify-content:space-between; */
+
     padding: 20px 10px;
 }
 
 .captionForm span{
-    
+    align-self:flex-start;
+    text-decoration: underline;
+    color: #000;
+    cursor: pointer; 
+}
+
+.captionForm h4{
+    margin: 0 auto;
 }
 
 .formContainer{
-    border: 1px solid black;
     padding: 40px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 5px rgba(39, 39, 39, 0.5);
 }

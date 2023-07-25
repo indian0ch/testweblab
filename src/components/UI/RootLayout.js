@@ -2,47 +2,20 @@ import HeaderMenu from "../Header/HeaderMenu";
 import HeaderDescription from "../Header/HeaderDescription";
 import { Fragment, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
-import { tokenLoaderActions } from "../../storage/tokenSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ErrorPage from "../../pages/ErrorPage";
 import AuthorizationPage from "../../pages/AuthorizationPage";
 
 function RootLayout(props) {
   const dispatch = useDispatch();
   const [isAuthOk, setAuthOk] = useState(false);
-  const [isResponseOk, setResponseOk] = useState(true);
+
+  const TOKEN = useSelector((state) => state.tokenLoader.tokenJwt);
 
   useEffect(() => {
-    console.log("API_URL:", process.env.REACT_APP_API_URL);
-    console.log("API_URL:", process.env.API_URL);
+    TOKEN === 0 ? setAuthOk(false) : setAuthOk(true);
+  }, [TOKEN]);
 
-    fetch(`${process.env.REACT_APP_API_URL}/sessions`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-      },
-      body: JSON.stringify({
-        email: "fesiukandrey146@gmail.com",
-        password: "952195213",
-      }),
-    })
-      .then((response) => {
-        console.log(response);
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data);
-        if (data.status === 0) {
-          setResponseOk(false);
-        } else {
-          const token = data.token;
-          dispatch(tokenLoaderActions.setToken(token));
-        }
-      })
-      .catch(() => {
-        setResponseOk(false);
-      });
-  }, [process.env.REACT_APP_API_URL]);
 
   return (
     <Fragment>
@@ -57,7 +30,6 @@ function RootLayout(props) {
         <HeaderDescription />
       </header>
       {isAuthOk === true ? <Outlet /> : <AuthorizationPage />}
-      {/* {isResponseOk === true ? <Outlet /> : <ErrorPage></ErrorPage>} */}
     </Fragment>
   );
 }
