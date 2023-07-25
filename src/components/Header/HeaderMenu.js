@@ -13,16 +13,22 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "reactstrap";
+import { useDispatch } from "react-redux";
+import { tokenLoaderActions } from "../../storage/tokenSlice";
 
 function HeaderMenu(props) {
+  const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
-  console.log();
+
+  function unLoginHandler(){
+    dispatch(tokenLoaderActions.setLogin(false));
+  }
 
   return (
     <Navbar {...props}>
-      <NavbarBrand href="/">Film app</NavbarBrand>
+      <NavbarBrand>Film app</NavbarBrand>
       <NavbarToggler onClick={toggle} />
 
       <Collapse isOpen={isOpen} navbar>
@@ -48,6 +54,7 @@ function HeaderMenu(props) {
               Пошук
             </NavLink>
           </NavItem>
+          
           <UncontrolledDropdown nav inNavbar>
             <DropdownToggle className={classes.link} nav caret>
               Сервіси
@@ -92,6 +99,14 @@ function HeaderMenu(props) {
               </DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
+          <NavItem className={classes.navItem}>
+            <NavLink
+              className='text-decoration-underline'
+              onClick={unLoginHandler}
+            >
+              Розлогінитись
+            </NavLink>
+          </NavItem>
         </Nav>
       </Collapse>
     </Navbar>
