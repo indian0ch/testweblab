@@ -16,6 +16,7 @@ import { postFilm } from "./postFilm";
 import { validateActors } from "./validateActors";
 import { ADD_URL } from "../../../asserts/urlLinks";
 import FormGroupCustom from "../../UI/FormGroupCustom";
+import { checkValidation } from "../../Authorization/checkValidation-function";
 
 function filmInfoReducer(state, action) {
   switch (action.type) {
@@ -60,22 +61,6 @@ function AddForm(props) {
     dispatchInfo({ type: typeString, status: false });
   }
 
-  function checkValidation() {
-    let validateStatus = true;
-    const fieldsToValidate = [
-      { ref: titleRef, type: "change_title_status" },
-      { ref: yearRef, type: "change_year_status" },
-      { ref: actorsRef, type: "change_actor_status" },
-    ];
-    fieldsToValidate.forEach((field) => {
-      if (field.ref.current.value === "") {
-        dispatchInfo({ type: field.type, status: true });
-        validateStatus = false;
-      }
-    });
-    return validateStatus;
-  }
-
   function cleanInput() {
     setSuccess(true);
     setTimeout(() => {
@@ -116,7 +101,13 @@ function AddForm(props) {
     }, 1000);
     setIsLoadingBtn(true);
 
-    if (checkValidation()) {
+    const fieldsToValidate = [
+      { ref: titleRef, type: "change_title_status" },
+      { ref: yearRef, type: "change_year_status" },
+      { ref: actorsRef, type: "change_actor_status" },
+    ];
+
+    if (checkValidation(fieldsToValidate,dispatchInfo)) {
       const validatedActorArr = validateActors(actorsRef.current.value);
       if (validatedActorArr) {
         getResponse(validatedActorArr);
