@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RootLayout from "./components/UI/RootLayout";
@@ -9,10 +8,6 @@ import DeleteForm from "./components/Editing/Deleting/DeleteForm";
 import AddForm from "./components/Editing/Adding/AddForm";
 import CatalogList from "./components/Catalog/CatalogList";
 import SearchPage from "./pages/SeachPage";
-import AuthorizationPage from "./pages/AuthorizationPage";
-import LoginForm from "./components/Authorization/LoginForm";
-import RegisterForm from "./components/Authorization/RegisterForm";
-import ErrorPage from "./pages/ErrorPage";
 
 const router = createBrowserRouter([
   {
