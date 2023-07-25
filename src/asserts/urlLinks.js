@@ -1,3 +1,5 @@
+export const USER_URL = `${process.env.REACT_APP_API_URL}/users`;
+export const SESSION_URL = `${process.env.REACT_APP_API_URL}/sessions`;
 export const DELETE_URL = `${process.env.REACT_APP_API_URL}/movies/`;
 export const ADD_URL = `${process.env.REACT_APP_API_URL}/movies`;
 export const IMPORT_URL = `${process.env.REACT_APP_API_URL}/movies/import`;

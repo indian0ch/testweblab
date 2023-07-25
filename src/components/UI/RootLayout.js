@@ -5,9 +5,11 @@ import { Outlet } from "react-router-dom";
 import { tokenLoaderActions } from "../../storage/tokenSlice";
 import { useDispatch } from "react-redux";
 import ErrorPage from "../../pages/ErrorPage";
+import AuthorizationPage from "../../pages/AuthorizationPage";
 
 function RootLayout(props) {
   const dispatch = useDispatch();
+  const [isAuthOk, setAuthOk] = useState(false);
   const [isResponseOk, setResponseOk] = useState(true);
 
   useEffect(() => {
@@ -21,13 +23,21 @@ function RootLayout(props) {
       },
       body: JSON.stringify({
         email: "fesiukandrey146@gmail.com",
-        password: "95219521",
+        password: "952195213",
       }),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        console.log(response);
+        return response.json();
+      })
       .then((data) => {
-        const token = data.token;
-        dispatch(tokenLoaderActions.setToken(token));
+        console.log(data);
+        if (data.status === 0) {
+          setResponseOk(false);
+        } else {
+          const token = data.token;
+          dispatch(tokenLoaderActions.setToken(token));
+        }
       })
       .catch(() => {
         setResponseOk(false);
@@ -46,7 +56,8 @@ function RootLayout(props) {
         />
         <HeaderDescription />
       </header>
-      {isResponseOk === true ? <Outlet /> : <ErrorPage></ErrorPage>}
+      {isAuthOk === true ? <Outlet /> : <AuthorizationPage />}
+      {/* {isResponseOk === true ? <Outlet /> : <ErrorPage></ErrorPage>} */}
     </Fragment>
   );
 }

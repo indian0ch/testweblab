@@ -1,0 +1,15 @@
+.captionForm{
+    display: flex;
+    justify-content:space-between;
+    padding: 20px 10px;
+}
+
+.captionForm span{
+    
+}
+
+.formContainer{
+    border: 1px solid black;
+    padding: 40px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
