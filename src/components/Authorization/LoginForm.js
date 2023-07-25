@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { SESSION_URL } from "../../asserts/urlLinks";
 import { fetchUser } from "./fetchUser";
 import { tokenLoaderActions } from "../../storage/tokenSlice";
+import { checkValidation } from "./checkValidation-function";
 
 function loginReducer(state, action) {
   switch (action.type) {
@@ -37,21 +38,6 @@ function LoginForm(props) {
   const passwordRef = useRef();
   const [isSuccess, setSuccess] = useState(null);
 
-  function checkValidation() {
-    let validateStatus = true;
-    const fieldsToValidate = [
-      { ref: emailRef, type: "change_valid_email" },
-      { ref: passwordRef, type: "change_valid_password" },
-    ];
-    fieldsToValidate.forEach((field) => {
-      if (field.ref.current.value === "") {
-        dispatchLogin({ type: field.type, status: true });
-        validateStatus = false;
-      }
-    });
-    return validateStatus;
-  }
-
   async function getResponse() {
     const response = await fetchUser(SESSION_URL, {
       email: emailRef.current.value,
@@ -76,9 +62,14 @@ function LoginForm(props) {
   }
 
   function onLoginHandler() {
+    const fields = [
+      { ref: emailRef, type: "change_valid_email" },
+      { ref: passwordRef, type: "change_valid_password" },
+    ];
     setSuccess(null);
     props.onResponseFail(true);
-    if (checkValidation()) {
+
+    if (checkValidation(fields, dispatchLogin)) {
       getResponse();
     }
   }

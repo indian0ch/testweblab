@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { USER_URL } from "../../asserts/urlLinks";
 import { fetchUser } from "./fetchUser";
 import { tokenLoaderActions } from "../../storage/tokenSlice";
+import { checkValidation } from "./checkValidation-function";
 
 function registerReducer(state, action) {
   switch (action.type) {
@@ -54,25 +55,6 @@ function RegisterForm(props) {
   const [isSuccess, setSuccess] = useState(null);
   const [validationError, setValidationError] = useState("");
 
-  function checkValidation() {
-    let validateStatus = true;
-    const fieldsToValidate = [
-      { ref: emailRef, type: "change_valid_email" },
-      { ref: passwordRef, type: "change_valid_password" },
-      { ref: nameRef, type: "change_valid_name" },
-      { ref: confirmPasswordRef, type: "change_valid_confirm" },
-    ];
-
-    fieldsToValidate.forEach((field) => {
-      if (field.ref.current.value === "") {
-        dispatchRegister({ type: field.type, status: true });
-        validateStatus = false;
-      }
-    });
-
-    return validateStatus;
-  }
-
   async function getResponse() {
     const response = await fetchUser(USER_URL, {
       email: emailRef.current.value,
@@ -111,11 +93,17 @@ function RegisterForm(props) {
   }
 
   function onRegisterHandler() {
+    const fields = [
+      { ref: emailRef, type: "change_valid_email" },
+      { ref: passwordRef, type: "change_valid_password" },
+      { ref: nameRef, type: "change_valid_name" },
+      { ref: confirmPasswordRef, type: "change_valid_confirm" },
+    ];
     setSuccess(null);
     props.onResponseFail(true);
     setValidationError("");
 
-    checkValidation() && getResponse();
+    checkValidation(fields, dispatchRegister) && getResponse();
   }
 
   return (
