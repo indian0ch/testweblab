@@ -68,6 +68,7 @@ function LoginForm(props) {
         props.onResponseFail(true);
         setTimeout(() => {
           dispatch(tokenLoaderActions.setToken(response.token));
+          props.onLogIn();
           navigate("/1");
         }, 1000);
       }

@@ -3,9 +3,13 @@ import { useState } from "react";
 import LoginForm from "../components/Authorization/LoginForm";
 import RegisterForm from "../components/Authorization/RegisterForm";
 import { Alert } from "reactstrap";
+import { useDispatch } from "react-redux";
+import { tokenLoaderActions } from "../storage/tokenSlice";
 
 function AuthorizationPage(props) {
+  const dispatch=useDispatch();
   const [isLoginOpen, setLoginOpen] = useState(true);
+  // const [isLoginIn, setLoginIn] = useState(true);
   const [isResponseOk, setResponseOk] = useState(null);
 
   function onChangeFormHandler() {
@@ -16,6 +20,10 @@ function AuthorizationPage(props) {
     setResponseOk(status);
   }
 
+  function onLogInHandler(status) {
+    dispatch(tokenLoaderActions.setLogin(true));
+  }
+
   return (
     <ContainerWrapper>
       <h2 className="text-center">Вікно авторизації у системі</h2>
@@ -23,11 +31,13 @@ function AuthorizationPage(props) {
         <LoginForm
           onChangeForm={onChangeFormHandler}
           onResponseFail={onResponseFailHandler}
+          onLogIn={onLogInHandler}
         />
       ) : (
         <RegisterForm
           onChangeForm={onChangeFormHandler}
           onResponseFail={onResponseFailHandler}
+          onLogIn={onLogInHandler}
         />
       )}
       {isResponseOk === false ? (

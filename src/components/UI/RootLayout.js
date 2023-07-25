@@ -10,11 +10,11 @@ function RootLayout(props) {
   const dispatch = useDispatch();
   const [isAuthOk, setAuthOk] = useState(false);
 
-  const TOKEN = useSelector((state) => state.tokenLoader.tokenJwt);
+  const isLogin = useSelector((state) => state.tokenLoader.isLogin);
 
   useEffect(() => {
-    TOKEN === 0 ? setAuthOk(false) : setAuthOk(true);
-  }, [TOKEN]);
+    isLogin === true ? setAuthOk(true) : setAuthOk(false);
+  }, [isLogin]);
 
 
   return (
