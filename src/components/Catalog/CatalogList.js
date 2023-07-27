@@ -43,13 +43,13 @@ function CatalogList(props) {
       const moviesData = await getMovies({
         url,
         token,
-        offset: (number - 1) * 5,
+        offset: (number - 1) * 10,
       });
       if (moviesData) {
         setSpinnerActive(false);
         const [arrMovies, counts] = adjustPagination(moviesData, token);
 
-        counts < 5
+        counts < 10
           ? dispatch(paginationCounterActions.setNextAvailable(false))
           : dispatch(paginationCounterActions.setNextAvailable(true));
 
