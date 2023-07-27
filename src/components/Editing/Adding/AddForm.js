@@ -17,6 +17,7 @@ import { validateActors } from "./validateActors";
 import { ADD_URL } from "../../../asserts/urlLinks";
 import FormGroupCustom from "../../UI/FormGroupCustom";
 import { checkValidation } from "../../Authorization/checkValidation-function";
+import { useNavigate } from "react-router-dom";
 
 function filmInfoReducer(state, action) {
   switch (action.type) {
@@ -42,6 +43,7 @@ function filmInfoReducer(state, action) {
 }
 
 function AddForm(props) {
+  const navigate = useNavigate();
   const [filmInfoState, dispatchInfo] = useReducer(filmInfoReducer, {
     isTitleValid: false,
     isYearValid: false,
@@ -64,12 +66,8 @@ function AddForm(props) {
   function cleanInput() {
     setSuccess(true);
     setTimeout(() => {
-      setSuccess(null);
-    }, 2000);
-
-    titleRef.current.value = "";
-    yearRef.current.value = "";
-    actorsRef.current.value = "";
+      navigate("/1");
+    }, 1000);
   }
 
   async function getResponse(actorArr) {
@@ -107,7 +105,7 @@ function AddForm(props) {
       { ref: actorsRef, type: "change_actor_status" },
     ];
 
-    if (checkValidation(fieldsToValidate,dispatchInfo)) {
+    if (checkValidation(fieldsToValidate, dispatchInfo)) {
       const validatedActorArr = validateActors(actorsRef.current.value);
       if (validatedActorArr) {
         getResponse(validatedActorArr);
@@ -184,7 +182,7 @@ function AddForm(props) {
       </Button>
       {isSuccess && (
         <Alert color="success" className="col-md-12 col-sm my-3">
-          Фільм успішно додано
+          Фільм з назвою <b>{titleRef.current.value}</b> успішно додано!
         </Alert>
       )}
       {isAlreadyExist === true ? (
