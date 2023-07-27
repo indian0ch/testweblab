@@ -1,0 +1,9 @@
+.buttonSearch{
+    height: 58px;
+}
+
+@media (max-width: 767px) {
+    .buttonSearch {
+        height: 3rem;
+    }
+  }

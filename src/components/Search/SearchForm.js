@@ -9,12 +9,13 @@ import {
   Label,
   Button,
 } from "reactstrap";
+import classes from "./Search.module.css";
 
 const SearchForm = React.forwardRef((props, ref) => {
   return (
     <Form onSubmit={props.onSubmitHandler} className="col-12 mx-auto my-3">
-      <Row className="align-items-center">
-        <Col md={6}>
+      <Row>
+        <Col md={8}>
           <FormGroup className="col-sm" floating>
             <Input
               id={props.id}
@@ -32,8 +33,13 @@ const SearchForm = React.forwardRef((props, ref) => {
             </FormFeedback>
           </FormGroup>
         </Col>
-        <Col md={6}>
-          <Button color="warning" type="submit" outline>
+        <Col md={4}>
+          <Button
+            className={classes.buttonSearch}
+            color="warning"
+            type="submit"
+            outline
+          >
             Пошук фільму за {props.title}
           </Button>
         </Col>
