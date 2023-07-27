@@ -10,7 +10,7 @@ import { useSearchParams } from "react-router-dom";
 function AuthorizationPage(props) {
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
-  const isLoginOpen = searchParams.get("mode") === "signin";
+  const isRegistryOpen = searchParams.get("mode") === "signup";
 
   const [isResponseOk, setResponseOk] = useState(null);
 
@@ -25,13 +25,13 @@ function AuthorizationPage(props) {
   return (
     <ContainerWrapper>
       <h2 className="text-center my-5">Вікно авторизації у системі</h2>
-      {isLoginOpen === true ? (
-        <LoginForm
+      {isRegistryOpen === true ? (
+        <RegisterForm
           onResponseFail={onResponseFailHandler}
           onLogIn={onLogInHandler}
         />
       ) : (
-        <RegisterForm
+        <LoginForm
           onResponseFail={onResponseFailHandler}
           onLogIn={onLogInHandler}
         />

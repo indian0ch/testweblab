@@ -14,17 +14,18 @@ function RootLayout(props) {
     isLogin === true ? setAuthOk(true) : setAuthOk(false);
   }, [isLogin]);
 
-
   return (
     <Fragment>
       <header>
-        <HeaderMenu
-          fixed="top"
-          color="light"
-          light="true"
-          expand="md"
-          container="fluid"
-        />
+        {isAuthOk && (
+          <HeaderMenu
+            fixed="top"
+            color="light"
+            light="true"
+            expand="md"
+            container="fluid"
+          />
+        )}
         <HeaderDescription />
       </header>
       {isAuthOk === true ? <Outlet /> : <AuthorizationPage />}
