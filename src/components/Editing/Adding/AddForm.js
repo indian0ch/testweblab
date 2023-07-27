@@ -14,7 +14,7 @@ import {
 } from "reactstrap";
 import { postFilm } from "./postFilm";
 import { validateActors } from "./validateActors";
-import { ADD_URL } from "../../../asserts/urlLinks";
+import { ADD_URL as url } from "../../../asserts/urlLinks";
 import FormGroupCustom from "../../UI/FormGroupCustom";
 import { checkValidation } from "../../Authorization/checkValidation-function";
 import { useNavigate } from "react-router-dom";
@@ -56,6 +56,7 @@ function AddForm(props) {
   const [isLoadingBtn, setIsLoadingBtn] = useState(false);
   const [isSuccess, setSuccess] = useState(null);
   const [isAlreadyExist, setAlreadyExist] = useState(null);
+  const [moviesCount, setMoviesCount] = useState(null);
 
   const token = useSelector((state) => state.tokenLoader.tokenJwt);
 
@@ -67,24 +68,25 @@ function AddForm(props) {
     setSuccess(true);
     setTimeout(() => {
       navigate("/1");
-    }, 1000);
+    }, 2000);
   }
 
   async function getResponse(actorArr) {
-    const response = await postFilm(ADD_URL, token, {
+    const responsePost = await postFilm(url, token, {
       title: titleRef.current.value,
       year: yearRef.current.value,
       format: formatRef.current.value,
       actors: actorArr,
     });
 
-    if (response.status === 0) {
-      (response.error.code === "NOT_UNIQUE" ||
-        response.error.code === "MOVIE_EXISTS") &&
+    if (responsePost.status === 0) {
+      (responsePost.error.code === "NOT_UNIQUE" ||
+        responsePost.error.code === "MOVIE_EXISTS") &&
         setAlreadyExist(true);
       setSuccess(false);
       return false;
     } else {
+      setMoviesCount(responsePost.data.id);
       cleanInput();
       return true;
     }
@@ -182,7 +184,8 @@ function AddForm(props) {
       </Button>
       {isSuccess && (
         <Alert color="success" className="col-md-12 col-sm my-3">
-          Фільм з назвою <b>{titleRef.current.value}</b> успішно додано!
+          Фільм з назвою <b>{titleRef.current.value}</b> успішно додано!{" "}
+          <br></br> За весь час додали {moviesCount} фільмів
         </Alert>
       )}
       {isAlreadyExist === true ? (
