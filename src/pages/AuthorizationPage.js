@@ -5,15 +5,14 @@ import RegisterForm from "../components/Authorization/RegisterForm";
 import { Alert } from "reactstrap";
 import { useDispatch } from "react-redux";
 import { tokenLoaderActions } from "../storage/tokenSlice";
+import { useSearchParams } from "react-router-dom";
 
 function AuthorizationPage(props) {
-  const dispatch=useDispatch();
-  const [isLoginOpen, setLoginOpen] = useState(true);
-  const [isResponseOk, setResponseOk] = useState(null);
+  const dispatch = useDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const isLoginOpen = searchParams.get("mode") === "signin";
 
-  function onChangeFormHandler() {
-    setLoginOpen(!isLoginOpen);
-  }
+  const [isResponseOk, setResponseOk] = useState(null);
 
   function onResponseFailHandler(status) {
     setResponseOk(status);
@@ -28,13 +27,11 @@ function AuthorizationPage(props) {
       <h2 className="text-center my-5">Вікно авторизації у системі</h2>
       {isLoginOpen === true ? (
         <LoginForm
-          onChangeForm={onChangeFormHandler}
           onResponseFail={onResponseFailHandler}
           onLogIn={onLogInHandler}
         />
       ) : (
         <RegisterForm
-          onChangeForm={onChangeFormHandler}
           onResponseFail={onResponseFailHandler}
           onLogIn={onLogInHandler}
         />

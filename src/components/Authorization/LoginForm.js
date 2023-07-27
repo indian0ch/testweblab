@@ -2,7 +2,7 @@ import classes from "./Authorization.module.css";
 import { Form, Button, Alert } from "reactstrap";
 import { Fragment, useRef, useReducer, useState } from "react";
 import FormGroupCustom from "../UI/FormGroupCustom";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { SESSION_URL } from "../../asserts/urlLinks";
 import { fetchUser } from "./fetchUser";
@@ -114,7 +114,7 @@ function LoginForm(props) {
           >
             Увійти
           </Button>
-          <span onClick={props.onChangeForm}>Реєстрація</span>
+          <Link to={`?mode=signup`}>Реєстрація</Link>
         </div>
       </Form>
       {isSuccess && (
