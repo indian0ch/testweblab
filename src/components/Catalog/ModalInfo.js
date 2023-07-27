@@ -13,6 +13,12 @@ function ModalInfo(props) {
 
   const token = useSelector((state) => state.tokenLoader.tokenJwt);
 
+  const [nestedModal, setNestedModal] = useState(false);
+  const toggleNested = () => {
+    setNestedModal(!nestedModal);
+    // setCloseAll(false);
+  };
+
   useEffect(() => {
     //Отримаємо інфо по конкретному фільмі
     const fetchMovie = async () => {
@@ -46,11 +52,12 @@ function ModalInfo(props) {
       dispatch(deleteTitleActions.setError(false));
       dispatch(deleteTitleActions.setDeletedTitle(movieData.title));
     }
+    toggleNested();
     props.toggle();
   }
 
   return (
-    <Modal isOpen={props.modal} toggle={props.toggle}>
+    <Modal isOpen={props.modal} toggle={props.toggle} centered={true}>
       <ModalHeader toggle={props.toggle}>
         Інформація про фільм {movieData.title}
       </ModalHeader>
@@ -60,13 +67,30 @@ function ModalInfo(props) {
         <p>Актори : {actorsList}</p>
       </ModalBody>
       <ModalFooter>
-        <Button color="danger" onClick={deleteHandler}>
+        <Button color="danger" onClick={toggleNested}>
           Видалити
         </Button>
         <Button color="primary" onClick={props.toggle}>
           OK
         </Button>
       </ModalFooter>
+      <Modal
+        isOpen={nestedModal}
+        toggle={toggleNested}
+        centered={true}
+      >
+        <ModalBody>
+          Ви справді хочете видалити <b>{movieData.title}</b> зі списку фільмів?
+        </ModalBody>
+        <ModalFooter>
+          <Button color="warning" onClick={deleteHandler}>
+            Так
+          </Button>
+          <Button color="primary" onClick={toggleNested}>
+            Ні
+          </Button>
+        </ModalFooter>
+      </Modal>
     </Modal>
   );
 }
