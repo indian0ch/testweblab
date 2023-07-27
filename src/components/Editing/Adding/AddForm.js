@@ -143,7 +143,7 @@ function AddForm(props) {
             invalid={filmInfoState.isYearValid}
             onClick={() => clickInputHandler("change_year_status")}
             max="2021"
-            min="1800"
+            min="1900"
           >
             Рік випуску
           </FormGroupCustom>
@@ -158,7 +158,7 @@ function AddForm(props) {
         >
           <option value="VHS">VHS</option>
           <option value="DVD">DVD</option>
-          <option value="Blu-ray">Blu-ray</option>
+          <option value="Blu-ray">Blu-Ray</option>
         </Input>
         <Label for="contactPhone">Формат</Label>
       </FormGroup>
