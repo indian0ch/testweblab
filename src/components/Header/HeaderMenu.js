@@ -22,7 +22,7 @@ function HeaderMenu(props) {
 
   const toggle = () => setIsOpen(!isOpen);
 
-  function unLoginHandler(){
+  function unLoginHandler() {
     dispatch(tokenLoaderActions.setLogin(false));
   }
 
@@ -54,7 +54,7 @@ function HeaderMenu(props) {
               Пошук
             </NavLink>
           </NavItem>
-          
+
           <UncontrolledDropdown nav inNavbar>
             <DropdownToggle className={classes.link} nav caret>
               Сервіси
@@ -69,18 +69,6 @@ function HeaderMenu(props) {
                     onClick={isOpen && toggle}
                   >
                     Додати фільм
-                  </Link>
-                </NavItem>
-              </DropdownItem>
-              <DropdownItem>
-                {" "}
-                <NavItem>
-                  <Link
-                    className={classes.link}
-                    to="/editing/delete"
-                    onClick={isOpen && toggle}
-                  >
-                    Видалити фільм
                   </Link>
                 </NavItem>
               </DropdownItem>
@@ -101,7 +89,7 @@ function HeaderMenu(props) {
           </UncontrolledDropdown>
           <NavItem className={classes.navItem}>
             <NavLink
-              className='text-decoration-underline'
+              className="text-decoration-underline"
               onClick={unLoginHandler}
             >
               Розлогінитись

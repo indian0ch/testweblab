@@ -4,6 +4,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { Input, Label } from "reactstrap";
 import { useState } from "react";
 import { SortLIST_URL, LIST_URL } from "./../asserts/urlLinks";
+import MessageBlock from "../components/Catalog/MessageBlock";
 
 function CatalogPage(props) {
   const navigate = useNavigate();
@@ -42,6 +43,7 @@ function CatalogPage(props) {
         <Outlet context={urlForLoad}></Outlet>
       </div>
       <Pagination checkStatus={isSortChecked} />
+      <MessageBlock />
     </ContainerWrapper>
   );
 }

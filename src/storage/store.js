@@ -6,6 +6,7 @@ import thunk from "redux-thunk";
 
 import tokenReducer from "./tokenSlice";
 import paginationReducer from "./paginationSlice";
+import deleteReducer from "./deleteMovieSlice";
 
 const persistConfig = {
   key: "root",
@@ -15,6 +16,7 @@ const persistConfig = {
 const reducers = combineReducers({
   tokenLoader: tokenReducer,
   paginationCounter: paginationReducer,
+  deleteTitle: deleteReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);

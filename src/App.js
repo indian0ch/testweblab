@@ -4,7 +4,6 @@ import RootLayout from "./components/UI/RootLayout";
 import EditPage from "./pages/EditPage";
 import ImportPage from "./pages/ImportPage";
 import CatalogPage from "./pages/CatalogPage";
-import DeleteForm from "./components/Editing/Deleting/DeleteForm";
 import AddForm from "./components/Editing/Adding/AddForm";
 import CatalogList from "./components/Catalog/CatalogList";
 import SearchPage from "./pages/SeachPage";
@@ -31,11 +30,7 @@ const router = createBrowserRouter([
           {
             path: "add",
             element: <AddForm />,
-          },
-          {
-            path: "delete",
-            element: <DeleteForm />,
-          },
+          }
         ],
       },
       {

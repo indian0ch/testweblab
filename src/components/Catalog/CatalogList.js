@@ -32,6 +32,7 @@ function CatalogList(props) {
   const [loadedRows, setLoadedRows] = useState([]);
 
   const token = useSelector((state) => state.tokenLoader.tokenJwt);
+  const deleteTitle = useSelector((state) => state.deleteTitle.deleteFilmTitle);
 
   useEffect(() => {
     setSpinnerActive(true);
@@ -45,6 +46,7 @@ function CatalogList(props) {
         token,
         offset: (number - 1) * 10,
       });
+
       if (moviesData) {
         setSpinnerActive(false);
         const [arrMovies, counts] = adjustPagination(moviesData, token);
@@ -56,8 +58,8 @@ function CatalogList(props) {
         setLoadedRows(arrMovies);
       }
     };
-    fetchMovies();
-  }, [url, token, pageNumber]);
+    deleteTitle === "" && fetchMovies();
+  }, [url, token, pageNumber, deleteTitle]);
 
   return (
     <ListGroup className={classes.listContainer}>

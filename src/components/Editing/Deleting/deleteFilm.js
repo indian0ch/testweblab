@@ -13,7 +13,6 @@ export async function deleteFilm(url, token, id) {
       return response.json();
     })
     .then((data) => {
-
       return data;
     })
     .catch((error) => {
